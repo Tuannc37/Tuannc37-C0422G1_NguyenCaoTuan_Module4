@@ -15,7 +15,7 @@ public class CaculatorController {
 
     @GetMapping("/")
     public String showCalculator() {
-        return "caculator";
+        return "home";
     }
 
     @PostMapping("/calculator")
@@ -26,6 +26,6 @@ public class CaculatorController {
         model.addAttribute("number1",number1);
         model.addAttribute("number2",number2);
         model.addAttribute("operator",operator);
-        return "caculator";
+        return "home";
     }
 }
