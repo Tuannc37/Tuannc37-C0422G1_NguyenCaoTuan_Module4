@@ -6,9 +6,9 @@
 <body>
     <form action="/convert">
         <div>
-            <label>Nhập USD</label>
+            <label>Input USD</label>
             <input type="number" name="usd" value="${usd}">
-            <button type="submit" class="btn btn-success" style="alignment: center">Đổi VND</button>
+            <button type="submit" class="btn btn-success" style="alignment: center">Exchange VND</button>
         </div>
     </form>
     <div>

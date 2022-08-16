@@ -27,7 +27,7 @@ public class DictionaryRepositoryImpl implements IDictionaryRepository {
             }
         }
         if(result == ""){
-            result = "Không tìm thấy";
+            result = "File not found";
         }
         return result;
     }
