@@ -16,7 +16,7 @@
         <p class="text-danger">Khuyến cáo: Khai báo thông tin sai là vi phạm pháp luật Việt Nam và có thể xử lý hình
             sự</p>
     </div>
-    <form:form method="post" modelAttribute="person" action="update?id=${person.id}">
+    <form:form method="post" modelAttribute="person" action="create">
         <div class="mb-3">
             <form:label path="name" class="form-label">Họ Tên (ghi in Chữ Hoa)</form:label>
             <form:input path="name" class="form-control"/>

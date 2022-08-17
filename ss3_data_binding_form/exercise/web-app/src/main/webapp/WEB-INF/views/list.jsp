@@ -11,6 +11,7 @@
 <div class="container-fluid">
     <h3>TỜ KHAI Y TẾ</h3>
     <a href="/person/showCreate" class="btn btn-primary mb-3">Create</a>
+    <h4>${msg}</h4>
     <table class="table">
         <thead>
         <tr>
