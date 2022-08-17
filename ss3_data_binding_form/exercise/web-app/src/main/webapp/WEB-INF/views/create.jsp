@@ -25,7 +25,7 @@
             <div class="col">
                 <div class="mb-3">
                     <form:label path="birthDay" class="form-label">Năm Sinh</form:label>
-                    <form:select path="birthDay" class="form-control" items="${yearList}"/>
+                    <form:select path="birthDay" class="form-select" items="${yearList}"/>
                 </div>
             </div>
             <div class="col">
@@ -80,29 +80,29 @@
             <div class="col">
                 <div class="mb-1">
                     <label class="form-label">Ngày khởi hành</label>
-                    <form:select path="startDay" items="${dayList}" cssClass="form-control" />
+                    <form:select path="startDay" items="${dayList}" cssClass="form-select" />
                 </div>
                 <div class="mb-1">
                     <label class="form-label">Tháng khởi hành</label>
-                    <form:select path="startMonth" items="${monthList}" cssClass="form-control" />
+                    <form:select path="startMonth" items="${monthList}" cssClass="form-select" />
                 </div>
                 <div class="mb-1">
                     <label class="form-label">Năm khởi hành</label>
-                    <form:select path="startYear" items="${yearList}" cssClass="form-control" />
+                    <form:select path="startYear" items="${yearList}" cssClass="form-select" />
                 </div>
             </div>
             <div class="col">
                 <div class="mb-1">
                     <label class="form-label">Ngày kết thúc</label>
-                    <form:select path="endDay" items="${dayList}" cssClass="form-control" />
+                    <form:select path="endDay" items="${dayList}" cssClass="form-select" />
                 </div>
                 <div class="mb-1">
                     <label class="form-label">Tháng kết thúc</label>
-                    <form:select path="endMonth" items="${monthList}" cssClass="form-control" />
+                    <form:select path="endMonth" items="${monthList}" cssClass="form-select" />
                 </div>
                 <div class="mb-1">
                     <label class="form-label">Năm kết thúc</label>
-                    <form:select path="endYear" items="${yearList}"  cssClass="form-control" />
+                    <form:select path="endYear" items="${yearList}"  cssClass="form-select" />
                 </div>
             </div>
         </div>
