@@ -17,8 +17,8 @@ public class ProductController {
     private IProductService iProductService;
 
     @GetMapping("")
-    public String index(Model model) {
-        List<Product> productList = iProductService.findAll();
+    public String index(@RequestParam(required = false,defaultValue = "") String productName, Model model) {
+        List<Product> productList = iProductService.findAll(productName);
         model.addAttribute("products", productList);
         return "/list";
     }
@@ -67,13 +67,6 @@ public class ProductController {
     public String view(@PathVariable int id, Model model) {
         model.addAttribute("products", iProductService.findById(id));
         return "/view";
-    }
-
-    @PostMapping("/find")
-    public String find(@RequestParam String nameProduct, Model model){
-        model.addAttribute("products", iProductService.findByName(nameProduct));
-        model.addAttribute("nameProduct",nameProduct);
-        return "/list";
     }
 
 }

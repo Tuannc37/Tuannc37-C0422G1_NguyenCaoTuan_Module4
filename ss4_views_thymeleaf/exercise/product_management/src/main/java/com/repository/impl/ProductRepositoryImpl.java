@@ -4,10 +4,7 @@ import com.model.Product;
 import com.repository.IProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ProductRepositoryImpl implements IProductRepository {
@@ -24,8 +21,14 @@ public class ProductRepositoryImpl implements IProductRepository {
     }
 
     @Override
-    public List<Product> findAll() {
-        return new ArrayList<>(productMap.values());
+    public List<Product> findAll(String name) {
+        List<Product> productList = new ArrayList<>();
+        for(Product p: productMap.values()){
+            if(p.getNameProduct().toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT))){
+                productList.add(p);
+            }
+        }
+        return productList;
     }
 
     @Override
@@ -41,17 +44,6 @@ public class ProductRepositoryImpl implements IProductRepository {
     @Override
     public void update(int id, Product product) {
         productMap.put(id, product);
-    }
-
-    @Override
-    public List<Product> findByName(String name) {
-        List<Product> productList = new ArrayList<>();
-        for (Product product:productMap.values()) {
-            if (product.getNameProduct().contains(name)){
-                productList.add(product);
-            }
-        }
-        return productList;
     }
 
     @Override
