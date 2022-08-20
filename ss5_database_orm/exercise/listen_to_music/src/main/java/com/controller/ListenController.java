@@ -1,17 +1,26 @@
 package com.controller;
 
 import com.model.Listen;
+import com.model.ListenForm;
 import com.service.IListenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("listen")
+@PropertySource("classpath:upload_file.properties")
 public class ListenController {
     @Autowired
     private IListenService listenService;
@@ -29,13 +38,28 @@ public class ListenController {
         return "/create";
     }
 
-    @PostMapping("create")
-    public String create(@ModelAttribute Listen listen,
-                         RedirectAttributes redirectAttributes) {
+    @Value("${file-upload}")
+    private String fileUpload;
+
+    @PostMapping("/create")
+    public ModelAndView saveProduct(@ModelAttribute ListenForm listenForm) {
+        MultipartFile multipartFile = listenForm.getPathFile();
+
+        String fileName = multipartFile.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(listenForm.getPathFile().getBytes(), new File(fileUpload + fileName));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        Listen listen = new Listen(listenForm.getId(), listenForm.getListenName(), listenForm.getArtist(),
+                listenForm.getCategory(), fileName);
         listenService.create(listen);
-        redirectAttributes.addFlashAttribute("mess", "Create OK!");
-        return "redirect:/listen/showList";
+        ModelAndView modelAndView = new ModelAndView("create");
+        modelAndView.addObject("listen", listenForm);
+        modelAndView.addObject("mess", "Thêm mới thành công!");
+        return modelAndView;
     }
+
 
     @GetMapping("showEdit/{id}")
     public String showEdit(@PathVariable int id, Model model) {

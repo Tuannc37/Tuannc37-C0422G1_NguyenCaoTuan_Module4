@@ -1,11 +1,11 @@
 package com.repository.impl;
 
 import com.model.Listen;
-import com.mysql.cj.Session;
 import com.repository.IListenRepository;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -14,115 +14,48 @@ import java.util.List;
 public class ListenRepositoryImpl implements IListenRepository {
     @Override
     public List<Listen> findAll() {
-        Session session = null;
-        List<Listen> listenList  = null;
-        try {
-            session = ConnectionUtil.sessionFactory.openSession();
-            listenList = session.createQuery("FROM Listen").getResultList();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return listenList;
+        TypedQuery<Listen> query = BaseRepository.entityManager.createQuery
+                ("select s from Listen as s", Listen.class);
+        return query.getResultList();
     }
 
     @Override
     public Listen findById(int id) {
-        Session session = null;
-        Listen listen = null;
-        try {
-            session = ConnectionUtil.sessionFactory.openSession();
-            listen = (Listen) session.createQuery("FROM Listen where id = :id").setParameter("id",id).getSingleResult();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return listen;
+        TypedQuery<Listen> query = BaseRepository.entityManager.createQuery
+                ("select s from Listen as s where s.id = :id", Listen.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
     public void create(Listen listen) {
-        Transaction transaction = null;
-        Session session = null;
-
-        try {
-            session = ConnectionUtil.sessionFactory.openSession();
-            transaction = session.beginTransaction();
-
-            session.save(listen);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        EntityTransaction entityTransaction = BaseRepository.entityManager.getTransaction();
+        entityTransaction.begin();
+        BaseRepository.entityManager.persist(listen);
+        entityTransaction.commit();
     }
 
     @Override
     public void update(int id, Listen listen) {
-        Transaction transaction = null;
-        Session session = null;
-
-        try {
-            session = ConnectionUtil.sessionFactory.openSession();
-            transaction = session.beginTransaction();
-
-            session.update(listen);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        EntityTransaction entityTransaction = BaseRepository.entityManager.getTransaction();
+        entityTransaction.begin();
+        BaseRepository.entityManager.merge(listen);
+        entityTransaction.commit();
     }
 
     @Override
     public void delete(int id) {
-        Transaction transaction = null;
-        Session session = null;
-
-        Listen listen = findById(id);
-
-        try {
-            session = ConnectionUtil.sessionFactory.openSession();
-            transaction = session.beginTransaction();
-
-            session.delete(listen);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        EntityTransaction entityTransaction = BaseRepository.entityManager.getTransaction();
+        entityTransaction.begin();
+        BaseRepository.entityManager.remove(BaseRepository.entityManager.find(Listen.class, id));
+        entityTransaction.commit();
     }
 
     @Override
     public List<Listen> search(String name) {
-        Session session = null;
-        List<Listen> listenList = null;
-
-        try {
-            session = ConnectionUtil.sessionFactory.openSession();
-            listenList = session.createQuery("from Listen where listenName like :name").setParameter("name", name).getResultList();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return listenList;
+        TypedQuery<Listen> query = BaseRepository.entityManager.createQuery
+                ("select s from Listen s where s.listenName like :name", Listen.class);
+        query.setParameter("name", name);
+        return query.getResultList();
     }
 }

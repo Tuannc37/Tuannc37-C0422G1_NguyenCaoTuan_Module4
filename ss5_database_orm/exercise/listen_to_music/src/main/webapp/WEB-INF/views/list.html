@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport"
@@ -18,7 +18,7 @@
         <a th:href="@{showCreate}" class="btn btn-primary">Create</a>
     </div>
     <div>
-        <form th:action="@{/listen/search?}" method="get">
+        <form th:action="@{/listen/search}" method="get">
             <input type="text" class="form-control" placeholder="Name Search" name="name">
             <input type="submit" value="search" class="btn btn-primary">
         </form>
@@ -59,7 +59,7 @@
 </div>
 
 <!-- Modal -->
-<form th:action="@{/listen/delete?}" method="post">
+<form th:action="@{/listen/delete}" method="post">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

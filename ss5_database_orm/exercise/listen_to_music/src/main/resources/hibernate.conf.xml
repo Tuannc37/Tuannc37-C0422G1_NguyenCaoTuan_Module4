@@ -5,10 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/listen?createDatabaseIfNotExist=true</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/list_music?createDatabaseIfNotExist=true</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">sangnguyen97</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.connection.password">Tuan1741994</property>
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
         <mapping class="com.model.Listen"/>

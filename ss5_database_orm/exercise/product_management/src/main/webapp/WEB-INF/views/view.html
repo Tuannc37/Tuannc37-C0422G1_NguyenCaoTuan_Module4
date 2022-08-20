@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+    <div th:replace="/layout :: navbar" ></div>
+    <div class="container-fluid">
+        <h3 class="text-center">Add Customer</h3>
+        <p class="text-center">
+            <a th:href="@{/product}">
+                Back to customer list
+            </a>
+        </p>
+        <div id="detail">
+                <div>Tên Sản Phẩm : <span th:text = "*{products.nameProduct}"></span></div>
+                <div>Giá SP : <span th:text = "*{products.price}"></span></div>
+                <div>Mô tả SP : <span th:text = "*{products.description}"></span></div>
+                <div>Nhà Sản Xuất : <span th:text = "*{products.producer}"></span></div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
