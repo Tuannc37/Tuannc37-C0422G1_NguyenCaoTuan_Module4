@@ -6,6 +6,7 @@ import com.service.IListenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -34,14 +35,14 @@ public class ListenController {
 
     @GetMapping("showCreate")
     public String showCreate(Model model) {
-        model.addAttribute("listen", new Listen());
+        model.addAttribute("listenForm", new Listen());
         return "/create";
     }
 
     @Value("${file-upload}")
     private String fileUpload;
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ModelAndView saveProduct(@ModelAttribute ListenForm listenForm) {
         MultipartFile multipartFile = listenForm.getPathFile();
 
@@ -51,7 +52,7 @@ public class ListenController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Listen listen = new Listen(listenForm.getId(), listenForm.getListenName(), listenForm.getArtist(),
+        Listen listen = new Listen(1, listenForm.getListenName(), listenForm.getArtist(),
                 listenForm.getCategory(), fileName);
         listenService.create(listen);
         ModelAndView modelAndView = new ModelAndView("/create");
