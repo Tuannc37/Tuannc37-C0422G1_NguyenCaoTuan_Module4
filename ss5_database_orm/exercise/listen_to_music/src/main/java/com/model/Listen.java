@@ -8,9 +8,13 @@ public class Listen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "list_name")
     private String listenName;
     private String artist;
     private String category;
+
+    @Column(name = "path_file")
     private String pathFile;
 
     public Listen() {

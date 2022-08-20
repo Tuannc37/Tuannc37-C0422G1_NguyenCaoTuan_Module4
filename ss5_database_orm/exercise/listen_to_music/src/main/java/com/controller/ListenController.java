@@ -29,7 +29,7 @@ public class ListenController {
     @GetMapping("showList")
     public String index(@RequestParam(required = false,defaultValue = "") String listenName, Model model) {
         List<Listen> listenList = listenService.findAll(listenName);
-        model.addAttribute("listen", listenList);
+        model.addAttribute("listenForm", listenList);
         return "/list";
     }
 
@@ -56,7 +56,7 @@ public class ListenController {
                 listenForm.getCategory(), fileName);
         listenService.create(listen);
         ModelAndView modelAndView = new ModelAndView("/create");
-        modelAndView.addObject("listen", listenForm);
+        modelAndView.addObject("listenForm", listenForm);
         modelAndView.addObject("mess", "Thêm mới thành công!");
         return modelAndView;
     }
@@ -64,7 +64,7 @@ public class ListenController {
     @GetMapping("showEdit/{id}")
     public String showEdit(@PathVariable int id, Model model) {
         Listen listen = listenService.findById(id);
-        model.addAttribute("listen", listen);
+        model.addAttribute("listenForm", listen);
         return "/update";
     }
 
