@@ -13,10 +13,11 @@ import java.util.List;
 @Transactional
 public class ListenRepositoryImpl implements IListenRepository {
     @Override
-    public List<Listen> findAll() {
-        TypedQuery<Listen> query = BaseRepository.entityManager.createQuery
-                ("select s from Listen as s", Listen.class);
-        return query.getResultList();
+    public List<Listen> findAll(String name) {
+        TypedQuery<Listen> typedQuery = BaseRepository.entityManager.
+                createQuery("select l from Listen l where l.listenName like :name", Listen.class);
+        typedQuery.setParameter("name", "%" + name + "%");
+        return typedQuery.getResultList();
     }
 
     @Override
@@ -51,11 +52,4 @@ public class ListenRepositoryImpl implements IListenRepository {
         entityTransaction.commit();
     }
 
-    @Override
-    public List<Listen> search(String name) {
-        TypedQuery<Listen> query = BaseRepository.entityManager.createQuery
-                ("select s from Listen s where s.listenName like :name", Listen.class);
-        query.setParameter("name", name);
-        return query.getResultList();
-    }
 }

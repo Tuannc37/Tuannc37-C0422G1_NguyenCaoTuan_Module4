@@ -12,9 +12,10 @@ import java.util.List;
 public class ListenServiceImpl implements IListenService {
     @Autowired
     private IListenRepository iListenRepository;
+
     @Override
-    public List<Listen> findAll() {
-        return iListenRepository.findAll();
+    public List<Listen> findAll(String name) {
+        return iListenRepository.findAll(name);
     }
 
     @Override
@@ -35,10 +36,5 @@ public class ListenServiceImpl implements IListenService {
     @Override
     public void delete(int id) {
         iListenRepository.delete(id);
-    }
-
-    @Override
-    public List<Listen> search(String name) {
-        return iListenRepository.search(name);
     }
 }

@@ -5,7 +5,7 @@ import com.model.Listen;
 import java.util.List;
 
 public interface IListenRepository {
-    List<Listen> findAll();
+    List<Listen> findAll(String name);
 
     Listen findById(int id);
 
@@ -15,5 +15,4 @@ public interface IListenRepository {
 
     void delete(int id);
 
-    List<Listen> search(String name);
 }

@@ -26,8 +26,8 @@ public class ListenController {
     private IListenService listenService;
 
     @GetMapping("showList")
-    public String showList(Model model) {
-        List<Listen> listenList = listenService.findAll();
+    public String index(@RequestParam(required = false,defaultValue = "") String listenName, Model model) {
+        List<Listen> listenList = listenService.findAll(listenName);
         model.addAttribute("listen", listenList);
         return "/list";
     }
@@ -83,12 +83,5 @@ public class ListenController {
         listenService.delete(id);
         redirectAttributes.addFlashAttribute("mess", "Delete OK!");
         return "redirect:/listen/showList";
-    }
-
-    @GetMapping("search")
-    public String search(@RequestParam String name, Model model) {
-        List<Listen> listenList = listenService.search(name);
-        model.addAttribute("listen", listenList);
-        return "/list";
     }
 }
