@@ -43,7 +43,7 @@ public class ListenController {
     private String fileUpload;
 
     @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ModelAndView saveProduct(@ModelAttribute ListenForm listenForm) {
+    public String saveProduct(@ModelAttribute ListenForm listenForm) {
         MultipartFile multipartFile = listenForm.getPathFile();
 
         String fileName = multipartFile.getOriginalFilename();
@@ -57,8 +57,8 @@ public class ListenController {
         listenService.create(listen);
         ModelAndView modelAndView = new ModelAndView("/create");
         modelAndView.addObject("listenForm", listenForm);
-        modelAndView.addObject("mess", "Thêm mới thành công!");
-        return modelAndView;
+        modelAndView.addObject("mess", "Create ok!");
+        return "redirect:/listen/showList";
     }
 
     @GetMapping("showEdit/{id}")

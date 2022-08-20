@@ -3,10 +3,10 @@
 <body>
 <div th:replace="/layout :: navbar"></div>
 <div class="container-fluid">
-    <p class="text-success" th:text="${mess}"></p>
     <div class="text-center p-3">
         <h3>Listen List</h3>
         <a th:href="@{showCreate}" class="btn btn-primary">Create</a>
+        <h4 class="text-success" th:text="${mess}"></h4>
     </div>
     <table class="table table-success table-striped">
         <thead>
@@ -27,8 +27,8 @@
             <td th:text="${item.artist}"></td>
             <td th:text="${item.category}"></td>
             <td>
-                <audio controls>
-                    <source th:src="@{'/music/' + ${item.pathFile}}">
+                <audio controls
+                    th:src="@{'/music/' + ${item.pathFile}}">
                 </audio>
             </td>
             <td>
