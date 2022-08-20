@@ -28,6 +28,13 @@ public class Listen {
         this.pathFile = pathFile;
     }
 
+    public Listen(String listenName, String artist, String category, String pathFile) {
+        this.listenName = listenName;
+        this.artist = artist;
+        this.category = category;
+        this.pathFile = pathFile;
+    }
+
     public int getId() {
         return id;
     }

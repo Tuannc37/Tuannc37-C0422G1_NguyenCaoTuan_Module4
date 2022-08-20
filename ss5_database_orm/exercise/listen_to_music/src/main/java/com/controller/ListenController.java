@@ -52,7 +52,7 @@ public class ListenController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Listen listen = new Listen(1, listenForm.getListenName(), listenForm.getArtist(),
+        Listen listen = new Listen(listenForm.getListenName(), listenForm.getArtist(),
                 listenForm.getCategory(), fileName);
         listenService.create(listen);
         ModelAndView modelAndView = new ModelAndView("/create");
