@@ -54,7 +54,7 @@ public class ListenController {
         Listen listen = new Listen(listenForm.getId(), listenForm.getListenName(), listenForm.getArtist(),
                 listenForm.getCategory(), fileName);
         listenService.create(listen);
-        ModelAndView modelAndView = new ModelAndView("create");
+        ModelAndView modelAndView = new ModelAndView("/create");
         modelAndView.addObject("listen", listenForm);
         modelAndView.addObject("mess", "Thêm mới thành công!");
         return modelAndView;

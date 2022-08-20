@@ -26,7 +26,11 @@
             <td th:text="${item.listenName}"></td>
             <td th:text="${item.artist}"></td>
             <td th:text="${item.category}"></td>
-            <td th:text="${item.pathFile}"></td>
+            <td>
+                <audio controls>
+                    <source th:src="@{'/music/' + ${item.pathFile}}">
+                </audio>
+            </td>
             <td>
                 <a th:href="@{showEdit/{id}(id = ${item.id})}" class="btn btn-outline-success">Edit</a>
             </td>
