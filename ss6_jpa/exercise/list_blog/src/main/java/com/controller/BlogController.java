@@ -21,7 +21,7 @@ public class BlogController {
     public String index(Model model) {
         List<Blog> blogList = blogService.findAll();
         model.addAttribute("blog",blogList);
-        return  "list";
+        return "/list";
     }
 
     @GetMapping("showCreate")
@@ -44,7 +44,7 @@ public class BlogController {
         return "/update";
     }
 
-    @PostMapping("update")
+    @PostMapping("update/{id}")
     public String edit(@ModelAttribute Blog blog,
                        @PathVariable int id,
                        RedirectAttributes redirectAttributes) {
@@ -60,7 +60,7 @@ public class BlogController {
         return "redirect:/blog/showList";
     }
 
-    @GetMapping("view")
+    @GetMapping("view/{id}")
     public String view(@PathVariable int id, Model model) {
         model.addAttribute("blog", blogService.findId(id));
         return "/view";
