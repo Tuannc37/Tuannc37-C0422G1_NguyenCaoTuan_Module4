@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<div th:replace="/layout :: navbar" ></div>
+<div class="container">
+    <div class="text-center p-3">
+        <h3>Create Blog</h3>
+        <a href="/blog/showList" class="text-primary text-decoration-none">Back to home</a>
+    </div>
+    <form th:action="@{/blog/update/{id}(id = ${blog.id})}" method="post" th:object="${blog}">
+        <div class="mb-3">
+            <label>Blog Name</label>
+            <input type="text" class="form-control" th:field="*{nameBlog}">
+        </div>
+        <div class="mb-3">
+            <label>Content</label>
+            <input type="text" class="form-control" th:field="*{content}">
+        </div>
+        <button type="submit" value="Create" class="btn btn-primary">Update</button>
+    </form>
+</div>
+</body>
+</html>

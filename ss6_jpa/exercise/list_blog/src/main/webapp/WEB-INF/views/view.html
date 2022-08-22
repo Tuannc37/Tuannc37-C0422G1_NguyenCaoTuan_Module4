@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<div th:replace="/layout :: navbar" ></div>
+<div class="container-fluid">
+    <h3 class="text-center">Views Customer</h3>
+    <p class="text-center">
+        <a href="/blog/showList" class="text-primary text-decoration-none">Back to home</a>
+    </p>
+    <div id="detail" class="text-center">
+        <div>Blog Name : <span th:text = "*{blog.nameBlog}"></span></div>
+        <div>Content : <span th:text = "*{blog.content}"></span></div>
+    </div>
+</div>
+</body>
+</html>
