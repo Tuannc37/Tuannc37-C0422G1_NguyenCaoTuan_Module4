@@ -18,10 +18,10 @@ public class BlogController {
     private IBlogService blogService;
 
     @GetMapping("showList")
-    public String index(@RequestParam(required = false,defaultValue = "") String nameBlog, Model model) {
-        List<Blog> blogList = blogService.findAll(nameBlog);
-        model.addAttribute("blog", blogList);
-        return "/list";
+    public String index(Model model) {
+        List<Blog> blogList = blogService.findAll();
+        model.addAttribute("blog",blogList);
+        return  "list";
     }
 
     @GetMapping("showCreate")
@@ -33,36 +33,36 @@ public class BlogController {
     @PostMapping("create")
     public String create(@ModelAttribute Blog blog,
                          RedirectAttributes redirectAttributes) {
-        blogService.create(blog);
+        blogService.save(blog);
         redirectAttributes.addFlashAttribute("mess", "Thêm mới thành công!");
         return "redirect:/blog/showList";
     }
 
     @GetMapping("showEdit/{id}")
     public String edit(@PathVariable int id, Model model ) {
-        model.addAttribute("blog", blogService.findById(id));
+        model.addAttribute("blog", blogService.findId(id));
         return "/update";
     }
 
-    @PostMapping("update/{id}")
+    @PostMapping("update")
     public String edit(@ModelAttribute Blog blog,
                        @PathVariable int id,
                        RedirectAttributes redirectAttributes) {
-        blogService.update(id, blog);
+        blogService.update(blog);
         redirectAttributes.addFlashAttribute("mess", "Cập nhật thành công!");
         return "redirect:/blog/showList";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("delete")
     public String delete(@RequestParam int id, RedirectAttributes redirect) {
         blogService.delete(id);
         redirect.addFlashAttribute("success", "Xóa thành công!");
         return "redirect:/blog/showList";
     }
 
-    @GetMapping("/view/{id}")
+    @GetMapping("view")
     public String view(@PathVariable int id, Model model) {
-        model.addAttribute("blog", blogService.findById(id));
+        model.addAttribute("blog", blogService.findId(id));
         return "/view";
     }
 }

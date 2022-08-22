@@ -1,7 +1,6 @@
 package com.config;
 
 import com.repository.IBlogRepository;
-import com.repository.impl.BlogRepository;
 import com.service.IBlogService;
 import com.service.impl.BlogService;
 import org.springframework.beans.BeansException;
@@ -111,16 +110,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
-    }
-
-    @Bean
-    public IBlogRepository iBlogRepository(){
-        return new BlogRepository();
-    }
-
-    @Bean
-    public IBlogService iBlogService(){
-        return new BlogService();
     }
 }
 
