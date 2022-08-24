@@ -18,10 +18,11 @@ public class ProductController {
     private IProductService iProductService;
 
     @GetMapping(value = {"/",})
-    public String showList( Model model,@PageableDefault(size = 2) Pageable pageable,
-                            @RequestParam(defaultValue = "") String name) {
-        model.addAttribute("products", iProductService.findAllProduct(name,pageable));
-        model.addAttribute("nameVal", name);
+    public String showList( Model model,@PageableDefault(page = 0, size = 2) Pageable pageable,
+                            @RequestParam Optional<String> name) {
+        String nameVal = name.orElse("");
+        model.addAttribute("products", iProductService.findAllProduct(nameVal,pageable));
+        model.addAttribute("nameVal", nameVal);
         return "list";
     }
 
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping("/showEdit/{id}")
-    public String showEdit(@RequestParam int id, Model model) {
+    public String showEdit(@PathVariable int id, Model model) {
         model.addAttribute("products", iProductService.findById(id));
         return "update";
     }
@@ -51,7 +52,7 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam int id,RedirectAttributes redirectAttributes) {
         iProductService.delete(id);
         redirectAttributes.addFlashAttribute("mess", "Xóa thành công");

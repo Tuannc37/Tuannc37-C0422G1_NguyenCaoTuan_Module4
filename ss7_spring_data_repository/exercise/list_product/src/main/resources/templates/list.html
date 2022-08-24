@@ -55,8 +55,9 @@
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modelView">
-<!--                            onclick="objView(this.value)" th:value="${item.nameBlog}+','+${item.content}">-->
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modelView"
+                            onclick="objView(this.value)" th:value="${product.nameProduct}
+                            +','+${product.price}+','+${product.description}+','+${product.producer}">
                         View
                     </button>
                 </td>
@@ -70,7 +71,6 @@
             <span th:text="${products.totalPages}"></span>
             <a th:href="@{/(page=${products.number + 1},keyword=${nameVal})}">Next</a>
         </div>
-
     </div>
 
     <form th:action="@{/delete}" method="post">
@@ -97,37 +97,37 @@
         </div>
     </form>
 
-    <!-- Modal View-->
-<!--    <div class="modal fade " id="modelView" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"-->
-<!--         aria-hidden="true">-->
-<!--        <div class="modal-dialog" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h4 class="modal-title" id="modelViewId">View Blog</h4>-->
-<!--                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body bg-info" th:object="${products}">-->
-<!--                    <div class="mb-3">-->
-<!--                        Name Product: <span th:text = "*{products.nameProduct}"></span></div>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        Price: <span th:text = "*{products.price}"></span></div>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        Description: <span th:text = "*{products.description}"></span></div>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        Producer:  <span th:text = "*{products.producer}"></span></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+<!--     Modal View-->
+    <div class="modal fade " id="modelView" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modelViewId">View Blog</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-info">
+                    <div class="mb-3">
+                        Name Product: <span id="nameProduct"></span>
+                    </div>
+                    <div class="mb-3">
+                        Price: <span id="price"></span>
+                    </div>
+                    <div class="mb-3">
+                        Description: <span id="description"></span>
+                    </div>
+                    <div class="mb-3">
+                        Producer: <span id="producer"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         function objDelete(name) {
@@ -136,11 +136,13 @@
             document.getElementById("idDelete").value = arr[0];
         }
 
-        // function objView(name) {
-        //     let arr = name.split(",");
-        //     document.getElementById("nameBlog").innerText = arr[1];
-        //     document.getElementById("content").innerText = arr[0];
-        // }
+        function objView(name) {
+            let arr = name.split(",");
+            document.getElementById("nameProduct").innerText = arr[0];
+            document.getElementById("price").innerText = arr[1];
+            document.getElementById("description").innerText = arr[2];
+            document.getElementById("producer").innerText = arr[3];
+        }
     </script>
 </body>
 </html>

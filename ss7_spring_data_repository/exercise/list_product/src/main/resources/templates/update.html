@@ -11,9 +11,8 @@
             </a>
         </p>
         <div id="form">
-            <form th:action="@{/edit/{id}(id = ${products.id})}" th:object="${products}"
+            <form th:action="@{/edit/{id}(id = ${id})}" th:object="${products}"
                   method="POST" novalidate="novalidate">
-                <input type="hidden" th:field="*{id}"/>
                 <div>
                     <label>Tên Sản Phẩm</label>
                     <input type="text" th:field="*{nameProduct}"/>
