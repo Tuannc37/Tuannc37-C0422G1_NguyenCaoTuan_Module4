@@ -7,12 +7,10 @@ import javax.validation.constraints.*;
 
 public class UserDto implements Validator {
     @NotBlank(message = "Vui lòng nhập thông tin!")
-    @Pattern(regexp = "[A-Za-z ]+",message = "Sai định dạng")
     @Size(min = 5, max = 45,message = "Có độ dài tối thiểu 5,Tối đa 45 kí tự!!")
     private String firstname;
 
     @NotBlank(message = "Vui lòng nhập thông tin!")
-    @Pattern(regexp = "[A-Za-z ]+",message = "Sai định dạng")
     @Size(min = 5, max = 45,message = "Có độ dài tối thiểu 5,Tối đa 45 kí tự!!")
     private String lastName;
 
@@ -89,18 +87,18 @@ public class UserDto implements Validator {
         if (number.length()>11 || number.length()<10){
             errors.rejectValue("tel",
                     "create.tel",
-                    "Số điiẹn thoại có 10 of 11 số!");
+                    "Số điên thoại có 10 of 11 số!");
         }
         if (!number.startsWith("0")){
             errors.rejectValue("tel",
                     "create.tel",
-                    "Số điệ thoại bắt đầu từ số 0");
+                    "Số điện thoại bắt đầu từ số 0");
         }
 
         if (!number.matches("(^$|[0-9]*$)")){
             errors.rejectValue("tel",
                 "create.tel",
-                "Số điiẹn thoại không đúng định dạng");
+                "Số điên thoại không đúng định dạng");
         }
     }
 }
