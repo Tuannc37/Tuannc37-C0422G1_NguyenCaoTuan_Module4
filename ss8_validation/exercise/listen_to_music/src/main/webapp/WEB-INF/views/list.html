@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<div th:replace="/layout :: navbar"></div>
+<div class="container-fluid">
+    <div class="text-center p-3">
+        <h3>Listen List</h3>
+        <a th:href="@{showCreate}" class="btn btn-primary">Create</a>
+        <h4 class="text-success" th:text="${mess}"></h4>
+    </div>
+    <table class="table table-success table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Listen Name</th>
+            <th>Artist</th>
+            <th>Category</th>
+            <th>PathFile</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${listenForm}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.listenName}"></td>
+            <td th:text="${item.artist}"></td>
+            <td th:text="${item.category}"></td>
+            <td>
+                <audio controls
+                    th:src="@{'/music/' + ${item.pathFile}}">
+                </audio>
+            </td>
+            <td>
+                <a th:href="@{showEdit/{id}(id = ${item.id})}" class="btn btn-outline-success">Edit</a>
+            </td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        onclick="objDelete(this.value)" th:value="${item.id}+','+${item.listenName}">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<form th:action="@{/listen/delete}" method="post">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden name="id" id="idDelete">
+                    <span>do you want to delete? <span class="text-danger" id="nameDelete"></span></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    function objDelete(name) {
+        let arr = name.split(",");
+        document.getElementById("nameDelete").innerText = arr[1];
+        document.getElementById("idDelete").value = arr[0];
+    }
+</script>
+</body>
+</html>
