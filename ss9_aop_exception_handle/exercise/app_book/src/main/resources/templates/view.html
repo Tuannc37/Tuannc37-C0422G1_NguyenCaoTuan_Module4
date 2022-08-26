@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<div th:replace="/layout :: navbar" ></div>
+<div class="container-fluid">
+    <h3 class="text-center">Add Customer</h3>
+    <p class="text-center">
+        <a th:href="@{/}">
+            Back to book list
+        </a>
+    </p>
+    <div id="detail">
+        <form th:action="@{/rent}" th:object="${app}"
+              method="post" novalidate="novalidate">
+            <input type="hidden" th:field="*{id}"/>
+            <div>
+                <label>ID Sách</label>
+                <label th:text="${app.id}"></label>
+            </div>
+            <div>
+                <label>Tên Sách</label>
+                <label th:text="${app.nameStory}"></label>
+            </div>
+            <div>
+                <label>Nội Dung Sách</label>
+                <label th:text="${app.content}"></label>
+            </div>
+            <div>
+                <label>Số lượng còn lại</label>
+                <label th:text="${app.amountRemaining}"></label>
+            </div>
+            <div>
+                <input type="submit" value="Mượn Sách"/>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
