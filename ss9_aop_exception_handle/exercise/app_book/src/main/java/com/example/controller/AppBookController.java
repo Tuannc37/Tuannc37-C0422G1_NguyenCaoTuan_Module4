@@ -53,7 +53,7 @@ public class AppBookController {
             throw new Exception();
         }
 
-        if (appBook.getAmountRemaining() == 0){
+        if (appBook.getAmountRemaining() == appBook.getOriginalQuantity()){
             model.addAttribute("msg","Sách đã đủ");
             return "redirect:/";
         }
