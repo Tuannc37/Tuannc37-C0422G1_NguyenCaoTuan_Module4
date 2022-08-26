@@ -1,12 +1,15 @@
-package com.example.controller;
+package com.example.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Aspect
+@Component
 public class BootAspect {
     private int count = 1;
 
@@ -15,10 +18,5 @@ public class BootAspect {
         String methodName = joinPoint.getSignature().getName();
         int c = count++;
         System.err.println(" Method " + methodName + " đã chạy xong " + c + " lần");
-    }
-
-    @Before("allMethodPointCut()")
-    public void beforeCallMethod (){
-        System.out.println(LocalDate.now());
     }
 }
