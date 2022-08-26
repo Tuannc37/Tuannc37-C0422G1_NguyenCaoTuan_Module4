@@ -35,7 +35,14 @@
             <td th:text="${item.content}"></td>
             <td th:text="${item.amountRemaining}"></td>
             <td th:text="${item.originalQuantity}"></td>
-            <td><a class="btn btn-outline-primary" th:href="@{/detail}">Mượn Sách</a></td>
+            <td>
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        onclick="objBorrow(this.value)" th:value="${item.id}+','+${item.nameStory}
+                        +','+${item.content}+','+${item.amountRemaining}">
+                    Mượn Sách
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -46,6 +53,47 @@
         <span th:text="${app.totalPages}"></span>
         <a th:href="@{/(page=${app.number + 1},keyword=${nameVal})}">Next</a>
     </div>
+
+    <form th:action="@{/borrow}" method="post">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mượn Sách</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" hidden name="id" id="idBook">
+                        <div class="mb-3">
+                            Tên Sách: <span id="nameStory"></span>
+                        </div>
+                        <div class="mb-3">
+                            Nội dung: <span id="content"></span>
+                        </div>
+                        <div class="mb-3">
+                            Số lượng còn lại: <span id="amountRemaining"></span>
+                        </div>
+                        <div class="mb-3">
+                            Producer: <span id="producer"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Mượn sách">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function objBorrow(name) {
+            let arr = name.split(",");
+            document.getElementById("nameStory").innerText = arr[0];
+            document.getElementById("content").value = arr[1];
+            document.getElementById("amountRemaining").innerText = arr[2];
+        }
+    </script>
+
 </div>
 </body>
 </html>

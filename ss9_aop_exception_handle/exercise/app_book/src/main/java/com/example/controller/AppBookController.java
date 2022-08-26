@@ -25,48 +25,49 @@ public class AppBookController {
         return "list";
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam Integer id, Model model) {
-        model.addAttribute("book", iAppBookService.findById(id));
-        return "view";
-    }
-
-    @PostMapping("/rent")
-    public String update(@RequestParam Integer id, Model model) throws Exception {
+    @PostMapping("/borrow")
+    public String borrowBook(@RequestParam Integer id, Model model) throws Exception {
         AppBook appBook = iAppBookService.findById(id);
+
         if (appBook == null) {
             throw new Exception();
         }
-        if (appBook.getAmountRemaining() == 0) {
-            model.addAttribute("msg", "Sách bạn chọn đã hết!!");
-            model.addAttribute("app", appBook);
-            return "view";
+
+        if (appBook.getAmountRemaining() == 0){
+            model.addAttribute("msg","Sách bạn mượn đã hết");
+            return "redirect:/";
         }
-        appBook.setAmountRemaining(appBook.getAmountRemaining() - 1);
+
+        appBook.setAmountRemaining(appBook.getAmountRemaining() - 1 );
+        appBook.setAmountRemaining(appBook.getAmountRemaining() + 1 );
         iAppBookService.update(appBook);
+        model.addAttribute("msg","mượn sách thành công");
         model.addAttribute("app", appBook);
-        model.addAttribute("msg", "Thuê thành công!!");
-        return "list";
+        return "redirect:/";
     }
 
     @PostMapping("/pay")
-    public String pay(@RequestParam Integer id, Model model) throws Exception {
+    public String giveBack(@RequestParam Integer id, Model model) throws Exception {
         AppBook appBook = iAppBookService.findById(id);
+
         if (appBook == null) {
             throw new Exception();
         }
-        if (appBook.getOriginalQuantity() == appBook.getAmountRemaining()) {
-            model.addAttribute("msg", "Số lượng sách đã đủ!!");
-            return "list";
+
+        if (appBook.getAmountRemaining() == 0){
+            model.addAttribute("msg","Sách đã đủ");
+            return "redirect:/";
         }
-        appBook.setAmountRemaining(appBook.getAmountRemaining() + 1);
+        appBook.setAmountRemaining(appBook.getAmountRemaining() - 1 );
+        appBook.setAmountRemaining(appBook.getAmountRemaining() + 1 );
         iAppBookService.update(appBook);
-        model.addAttribute("msg", "Bạn đã trả sách thành công!!");
-        return "list";
+        model.addAttribute("messages","Trả sách thành công");
+        model.addAttribute("detail", appBook);
+        return "redirect:/";
     }
 
     @ExceptionHandler(value = Exception.class)
     public String error() {
-        return "error";
+        return "/error";
     }
 }
