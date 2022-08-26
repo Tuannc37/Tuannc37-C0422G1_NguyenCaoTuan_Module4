@@ -2,19 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head">
 <body>
+
 <div th:replace="/layout :: navbar" ></div>
 <div class="container-fluid">
     <h3 class="text-center">AppBook</h3>
-    <form th:action="@{/pay}" method="post">
+    <form th:action="@{/pay}" method="post" >
         <div class="text-center" style="margin-bottom: 10px;">
             <label>Nhập Mã Sách</label><br>
-            <input type="number">
+            <input type="number" name = "id">
         </div>
         <div class="text-center">
             <input class="btn btn-outline-primary" type="submit" value="Trả Sách"/>
         </div>
     </form>
-    <p th:text="${msg}" class="text-center"></p>
+    <p th:text="${msg}" class="text-center" style="color: red;"></p>
     <table class="table table-success table-striped">
         <thead>
         <tr>
@@ -73,9 +74,7 @@
                         <div class="mb-3">
                             Số lượng còn lại: <span id="amountRemaining"></span>
                         </div>
-                        <div class="mb-3">
-                            Producer: <span id="producer"></span>
-                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

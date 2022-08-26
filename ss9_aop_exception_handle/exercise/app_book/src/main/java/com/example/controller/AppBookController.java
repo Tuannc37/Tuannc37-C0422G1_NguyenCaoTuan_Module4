@@ -46,7 +46,7 @@ public class AppBookController {
     }
 
     @PostMapping("/pay")
-    public String giveBack(@RequestParam Integer id, Model model) throws Exception {
+    public String giveBack(@RequestParam Integer id, Model model ) throws Exception {
         AppBook appBook = iAppBookService.findById(id);
 
         if (appBook == null) {
