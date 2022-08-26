@@ -6,15 +6,14 @@
 <div th:replace="/layout :: navbar" ></div>
 <div class="container-fluid">
     <h3 class="text-center">AppBook</h3>
-    <form th:action="@{/pay}" method="post" >
-        <div class="text-center" style="margin-bottom: 10px;">
-            <label>Nhập Mã Sách</label><br>
-            <input type="number" name = "id">
-        </div>
-        <div class="text-center">
-            <input class="btn btn-outline-primary" type="submit" value="Trả Sách"/>
-        </div>
-    </form>
+
+    <div class="text-center">
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                data-bs-target="#exampleModal1">
+            Trả Sách
+        </button>
+    </div>
+
     <p th:text="${msg}" class="text-center" style="color: red;"></p>
     <table class="table table-success table-striped">
         <thead>
@@ -84,6 +83,28 @@
             </div>
         </div>
     </form>
+
+    <form th:action="@{/pay}" method="post">
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Trả Sách</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <label>Nhập Mã Sách</label><br>
+                        <input type="number" name = "id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Trả sách">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <script>
         function objBorrow(name) {
             let arr = name.split(",");
