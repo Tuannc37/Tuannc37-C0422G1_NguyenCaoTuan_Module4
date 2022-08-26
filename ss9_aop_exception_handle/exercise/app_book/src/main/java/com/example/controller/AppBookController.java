@@ -41,7 +41,7 @@ public class AppBookController {
         appBook.setAmountRemaining(appBook.getAmountRemaining() - 1 );
         appBook.setAmountRemaining(appBook.getAmountRemaining() + 1 );
         iAppBookService.update(appBook);
-        model.addAttribute("msg","mượn sách thành công");
+        model.addAttribute("msg","Mượn sách thành công");
         model.addAttribute("app", appBook);
         return "redirect:/";
     }
@@ -61,7 +61,7 @@ public class AppBookController {
         appBook.setAmountRemaining(appBook.getAmountRemaining() - 1 );
         appBook.setAmountRemaining(appBook.getAmountRemaining() + 1 );
         iAppBookService.update(appBook);
-        model.addAttribute("messages","Trả sách thành công");
+        model.addAttribute("msg","Trả sách thành công");
         model.addAttribute("detail", appBook);
         return "redirect:/";
     }
