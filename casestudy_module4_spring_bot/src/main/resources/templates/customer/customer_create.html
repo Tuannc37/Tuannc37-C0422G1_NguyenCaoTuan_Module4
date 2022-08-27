@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Create Form</title>
+    <style>
+        .container.w-50 {
+            background-color: #9bc4e5;
+            margin-top: 40px;
+            border-radius: 10px;
+            padding: 10px 30px;
+        }
+        .w-100.text-center {
+            margin-top: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:replace="/include/home::nav"></div>
+
+    <div class="create-form">
+        <div class="container w-50">
+            <form action="/customers?action=create" method="post">
+                <h5 style="align-content: center; color: #0069d9">THÊM MỚI CUSTOMER</h5>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Loại khách hàng:</label>
+                    <select class="form-select" name="customerTypeId" id="exampleFormControlSelect1">
+<!--                        <c:forEach items="${typeList}" var="type">-->
+<!--                            <option value="${type.customerTypeId}">${type.customerTypeName}</option>-->
+<!--                        </c:forEach>-->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput2">Tên khách hàng:</label>
+                    <input type="text" name="customerName" class="form-control" value="${customer.customerName}"
+                           id="exampleFormControlInput2"
+                           placeholder="Nguyen Van A" required>
+                    <p style="color: red"></p>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput3">Ngày sinh:</label>
+                    <input type="date" name="customerBirth" class="form-control" value=""
+                           id="exampleFormControlInput3" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect2">Giới tính:</label>
+                    <div id="exampleFormControlSelect2">
+                        <input type="radio" name="customerGender" value="1" checked>Nam
+                        <input type="radio" name="customerGender" value="2">Nữ
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput4">Số CMND:</label>
+                    <input type="text" name="customerIdCard" class="form-control" value="${customer.customerIdCard}"
+                           id="exampleFormControlInput4"
+                           placeholder="XXXXXXXX or XXXXXXXXXX" required>
+                    <p style="color: red"></p>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput5">Số điện thoại:</label>
+                    <input type="text" name="customerPhone" class="form-control" value="${customer.customerPhone}"
+                           id="exampleFormControlInput5"
+                           placeholder="(84)90xxxxxxx or (84)91xxxxxxx" required>
+                    <p style="color: red"></p>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput6">Email:</label>
+                    <input type="text" name="customerEmail" class="form-control" value="${customer.customerEmail}"
+                           id="exampleFormControlInput6"
+                           placeholder="abcxyz@gmail.com">
+                    <p style="color: red"></p>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput7">Địa chỉ:</label>
+                    <input type="text" name="customerAddress" class="form-control" value="${customer.customerAddress}"
+                           id="exampleFormControlInput7" required>
+                </div>
+                <div class="w-100 text-center">
+                    <button type="submit" class="btn btn-success w-50" style="alignment: center">Lưu</button>
+                </div>
+                <div class="w-100 text-center mt-20" id = >
+                    <p style="color: forestgreen; alignment: center!important;"></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="/include/home::footer"></div>
+    <script>
+        window.onload = function () {
+            let mess = document.getElementById("mess").value;
+            if (mess != null && mess  !== "") {
+                alert(mess);
+            }
+        }
+    </script>
+</body>
+</html>

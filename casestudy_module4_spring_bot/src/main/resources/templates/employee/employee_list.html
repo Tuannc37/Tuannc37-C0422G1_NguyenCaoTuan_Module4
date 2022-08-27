@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Management Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="/include/home::nav"></div>
+<div class="container-fluid">
+    <center style="margin-top: 10px;">
+        <h2>Employee Management</h2>
+        <div class="header-panel" style="margin-bottom: 10px;">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal2">
+                Thêm Mới
+            </button>
+        </div>
+    </center>
+    <div align="center">
+        <table class="table table-info table-striped">
+            <tr>
+                <th>ID nhân viên</th>
+                <th>Tên nhân viên</th>
+                <th>Ngày sinh</th>
+                <th>Số CMND</th>
+                <th>Mức lương</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Vị trí</th>
+                <th>Trình độ</th>
+                <th>Bộ phận</th>
+                <th>Tên tài khoản</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td>21</td>
+                <td>Vip</td>
+                <td>Tuấn</td>
+                <td>10/04/1994</td>
+                <td>Nam</td>
+                <td>121212113</td>
+                <td>03442334</td>
+                <td>dfdfdfdf@gmail.com</td>
+                <td>Nghệ An</td>
+                <td>Nhân Viên</td>
+                <td>dsdsds</td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal1">
+                        Sửa
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary bg-danger" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <form action="/users?action=delete" method="post">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input hidden type="text" name="id" id="deleteId">
+                        <span>Bạn có muốn xóa : </span><span id="deleteName"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white text-center">
+                        <h5 class="modal-title" id="exampleModalLabel1">Chỉnh Sửa Thông Tin Nhân Viên</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-light">
+                        <input type="text" hidden name="id">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Tên nhân viên:</label>
+                            <input type="text" name="employeeName" value="" class="form-control"
+                                   id="exampleFormControlInput1"
+                                   placeholder="Nguyễn Văn A" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput2">Ngày sinh:</label>
+                            <input type="date" name="employeeBirthday" class="form-control" value=""
+                                   id="exampleFormControlInput2"
+                                   placeholder="Nguyen Van A" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput3">Số CMND:</label>
+                            <input type="text" name="employeeIdCard" class="form-control" value=""
+                                   id="exampleFormControlInput3"
+                                   placeholder="XXXXXXXX or XXXXXXXXXX" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput4">Mức lương:</label>
+                            <input type="number" name="employeeSalary" class="form-control" value=""
+                                   id="exampleFormControlInput4"
+                                   placeholder="Số dương" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput5">Số điện thoại:</label>
+                            <input type="text" name="employeePhone" class="form-control" value=""
+                                   id="exampleFormControlInput5"
+                                   placeholder="(84)xxxxxxxx or 0xxxxxxxx" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput6">Email:</label>
+                            <input type="text" name="employeeEmail" class="form-control" value=""
+                                   id="exampleFormControlInput6"
+                                   placeholder="abcxyz@gmail.com">
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput7">Địa chỉ:</label>
+                            <input type="text" name="employeeAddress" class="form-control" value=""
+                                   id="exampleFormControlInput7" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Vị trí</label>
+                            <select class="form-select" name="positionId" id="exampleFormControlSelect1">
+                                <option value="receptionist" >Lễ tân</option>
+                                <option value="waiter" >Phục vụ</option>
+                                <option value="specialist" >Chuyên viên</option>
+                                <option value="supervisor" >Gián sát</option>
+                                <option value="manager" >Quản lý</option>
+                                <option value="director" >Giám đốc</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Trình độ</label>
+                            <select class="form-select" name="educationDegreeId" id="exampleFormControlSelect2">
+                                <option value="intermediate" >Trung Cấp</option>
+                                <option value="college" >Cao Đẳng</option>
+                                <option value="university" >Đại Học</option>
+                                <option value="afterUniversity" >Sau Đại Học</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect3">Bộ phận</label>
+                            <select class="form-select" name="divisionId" id="exampleFormControlSelect3">
+                                <option value="sales" >Sale – Marketing</option>
+                                <option value="administration" >Hành Chính</option>
+                                <option value="service" >Phục vụ</option>
+                                <option value="management" > Quản lý</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Chỉnh Sửa">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form>
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-white text-center">
+                        <h5 class="modal-title" id="exampleModalLabel2">Thêm Mới Nhân Viên</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-light">
+                        <input type="text" hidden name="id" id="">
+                        <div class="form-group">
+                            <label>Tên nhân viên:</label>
+                            <input type="text" name="employeeName" value="" class="form-control"
+                                   placeholder="Nguyễn Văn A" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày sinh:</label>
+                            <input type="date" name="employeeBirthday" class="form-control" value=""
+                                   placeholder="Nguyen Van A" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Số CMND:</label>
+                            <input type="text" name="employeeIdCard" class="form-control" value=""
+                                   placeholder="XXXXXXXX or XXXXXXXXXX" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Mức lương:</label>
+                            <input type="number" name="employeeSalary" class="form-control" value=""
+                                   placeholder="Số dương" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại:</label>
+                            <input type="text" name="employeePhone" class="form-control" value=""
+                                   placeholder="(84)xxxxxxxx or 0xxxxxxxx" required>
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="text" name="employeeEmail" class="form-control" value=""
+                                   placeholder="abcxyz@gmail.com">
+                            <p style="color: red"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ:</label>
+                            <input type="text" name="employeeAddress" class="form-control" value=""
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label>Vị trí</label>
+                            <select class="form-select" name="positionId">
+                                <option value="receptionist" >Lễ tân</option>
+                                <option value="waiter" >Phục vụ</option>
+                                <option value="specialist" >Chuyên viên</option>
+                                <option value="supervisor" >Gián sát</option>
+                                <option value="manager" >Quản lý</option>
+                                <option value="director" >Giám đốc</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Trình độ</label>
+                            <select class="form-select" name="educationDegreeId">
+                                <option value="intermediate" >Trung Cấp</option>
+                                <option value="college" >Cao Đẳng</option>
+                                <option value="university" >Đại Học</option>
+                                <option value="afterUniversity" >Sau Đại Học</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Bộ phận</label>
+                            <select class="form-select" name="divisionId">
+                                <option value="sales" >Sale – Marketing</option>
+                                <option value="administration" >Hành Chính</option>
+                                <option value="service" >Phục vụ</option>
+                                <option value="management" > Quản lý</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Thêm mới">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div th:replace="/include/home::footer"></div>
+
+    <script>
+        function showInfoDelete(id, name) {
+            document.getElementById("deleteId").value = id;
+            document.getElementById("deleteName").innerText = name;
+        }
+    </script>
+</div>
+
+</body>
+</html>

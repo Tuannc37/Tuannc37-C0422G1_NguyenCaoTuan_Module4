@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Management Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:replace="/include/home::nav"></div>
+    <div class = "container-fluid">
+        <center style="margin-top: 10px;">
+            <h2>Facility Management</h2>
+            <div class = header-panel>
+                <p><a class="btn btn-outline-primary" href="/showCreateFacility">Add New Facility</a></p>
+            </div>
+
+        </center>
+        <div align="center">
+            <table class="table table-info table-striped">
+                <tr>
+                    <th>ID Dịch vụ</th>
+                    <th>Tên dịch vụ</th>
+                    <th>Diện tích phòng</th>
+                    <th>Giá phòng</th>
+                    <th>Số người tối đa</th>
+                    <th>Kiểu thuê</th>
+                    <th>Loại dịch vụ</th>
+                    <th>Tiêu chuẩn phòng</th>
+                    <th>Mô tả khác</th>
+                    <th>Diện tích hồ bơi</th>
+                    <th>Số tầng</th>
+                    <th>Sửa</th>
+                    <th>Xóa</th>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td>bnm</td>
+                    <td> <a class="btn btn-outline-primary" href="/showEditFacility}">Edit</a></td>
+                    <td>
+                        <button onclick="showInfoDelete('${facility.serviceId}','${facility.serviceName}')" type="button" class="btn btn-primary bg-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <form action="/facility?action=delete" method="post">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input hidden type="text" name="serviceId" id="deleteId">
+                                <span>Bạn có muốn xóa : </span><span id="deleteName"></span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <script>
+                function showInfoDelete(id,name) {
+                    document.getElementById("deleteId").value= id;
+                    document.getElementById("deleteName").innerText=name;
+                }
+            </script>
+        </div>
+
+        <div th:replace="/include/home::footer" class="container-fluid"></div>
+    </div>
+
+</body>
+</html>
