@@ -7,92 +7,168 @@
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container-fluid">
+    <div th:replace="/include/home::nav"></div>
     <div class="container-fluid">
-        <div th:replace="/include/home::nav"></div>
-        <div class="container-fluid">
-            <center style="margin-top: 10px;">
-                <h2>Customer Management</h2>
-                <div class = header-panel>
-                    <p><a class="btn btn-outline-primary" href="/showCreateCustomer">Add New User</a></p>
-                </div>
-
-            </center>
-            <div align="center container">
-                <table class="table table-info table-striped ">
-                    <tr>
-                        <th>ID khách hàng</th>
-                        <th>Loại khách hàng</th>
-                        <th>Tên khách hàng</th>
-                        <th>Ngày sinh</th>
-                        <th>Giới tính</th>
-                        <th>Số CMND</th>
-                        <th>Số điện thoại</th>
-                        <th>Email</th>
-                        <th>Địa chỉ</th>
-                        <th>Sửa</th>
-                        <th>Xóa</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>aa</td>
-                        <td>abc</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td><a class="btn btn-outline-primary" href="/showEditCustomer">Edit</a></td>
-                        <td><button type="button" class="btn btn-primary bg-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Xóa
-                        </button></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>aa</td>
-                        <td>abc</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td>bnm</td>
-                        <td><a class="btn btn-outline-primary" href="/showEditCustomer">Edit</a></td>
-                        <td><button type="button" class="btn btn-primary bg-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Xóa
-                        </button></td>
-                    </tr>
-                </table>
-                <form action="/customers?action=delete" method="post">
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <input hidden type="text" name="customerId" id="deleteId">
-                                    <span>Bạn có muốn xóa : </span><span id="deleteName"></span>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <script>
-                    function showInfoDelete(id,name) {
-                        document.getElementById("deleteId").value= id;
-                        document.getElementById("deleteName").innerText=name;
-                    }
-                </script>
+        <center style="margin-top: 10px;">
+            <h2>Customer Management</h2>
+            <div class=header-panel>
+                <p><a class="btn btn-outline-primary" href="/showCreateCustomer">Add New User</a></p>
+            </div>
+            <h4 class="text-danger text-center" th:text="${mess}"></h4>
+        </center>
+        <div align="center container">
+            <table class="table table-info table-striped ">
+                <tr>
+                    <th>STT</th>
+                    <th>ID khách hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
+                    <th>Số CMND</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Loại khách hàng</th>
+                    <th>Sửa</th>
+                    <th>Xóa</th>
+                    <th>View</th>
+                </tr>
+                <tr th:each="customer , stt : ${customers}">
+                    <td th:text="${stt.count}"></td>
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.dateOfBirth}"></td>
+                    <td th:if="${customer.gender == 0}">Nữ</td>
+                    <td th:if="${customer.gender == 1}">Nam</td>
+                    <td th:text="${customer.idCard}"></td>
+                    <td th:text="${customer.phoneNumber}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td th:text="${customer.address}"></td>
+                    <td th:text="${customer.customerType.name}"></td>
+                    <td>
+                        <a th:href="@{showEditCustomer/{id} (id=${customer.id})}" class="btn btn-outline-success">Edit</a>
+                    </td>
+                    <td>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#modelId"
+                                onclick="objDelete(this.value)" th:value="${customer.id}+','+${customer.name}">
+                            Delete
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                data-bs-target="#modelView"
+                                onclick="objView(this.value)" th:value="${customer.name}
+                            +','+${customer.dateOfBirth}+','+${customer.gender}
+                            +','+${customer.idCard}+','+${customer.phoneNumber}+','+${customer.email}
+                            +','+${customer.address}+','+${customer.customerType}">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <div class="container-fluid">
+                <a th:href="@{/customer/(page=${customers.number - 1},keyword=${nameVal})}"
+                th:if="${customers.hasPrevious}">Previous</a>
+                <span th:text="${customers.number + 1}"></span>
+                /
+                <span th:text="${customers.totalPages}"></span>
+                <a th:href="@{/customer/(page=${customers.number + 1},keyword=${nameVal})}"
+                   th:if="${customers.hasNext}">Next</a>
             </div>
         </div>
 
-        <div th:replace="/include/home::footer"></div>
+        <form th:action="@{/delete}" method="post">
+            <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelTitleId">Delete Product</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span>do you want to delete? <span class="text-danger" id="nameDelete"></span></span>
+                            <input type="text" hidden id="idDelete" name="id">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--     Modal View-->
+        <div class="modal fade " id="modelView" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header bg-info text-center text-white">
+                        <h4 class="modal-title" id="modelViewId">View Customer</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            Name Product: <span id="name"></span>
+                        </div>
+                        <div class="mb-3">
+                            Price: <span id="dateOfBirth"></span>
+                        </div>
+                        <div class="mb-3">
+                            Description: <span id="gender"></span>
+                        </div>
+                        <div class="mb-3">
+                            Producer: <span id="idCard"></span>
+                        </div>
+                        <div class="mb-3">
+                            Producer: <span id="phoneNumber"></span>
+                        </div>
+                        <div class="mb-3">
+                            Producer: <span id="email"></span>
+                        </div>
+                        <div class="mb-3">
+                            Producer: <span id="address"></span>
+                        </div>
+                        <div class="mb-3">
+                            Producer: <span id="customerType"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function objDelete(name) {
+                let arr = name.split(",");
+                document.getElementById("nameDelete").innerText = arr[1];
+                document.getElementById("idDelete").value = arr[0];
+            }
+
+            function objView(name) {
+                let arr = name.split(",");
+                document.getElementById("name").innerText = arr[0];
+                document.getElementById("dateOfBirth").innerText = arr[1];
+                document.getElementById("gender").innerText = arr[2];
+                document.getElementById("idCard").innerText = arr[3];
+                document.getElementById("phoneNumber").innerText = arr[4];
+                document.getElementById("email").innerText = arr[5];
+                document.getElementById("address").innerText = arr[6];
+                document.getElementById("customerType").innerText = arr[7];
+            }
+        </script>
     </div>
+    <div th:replace="/include/home::footer"></div>
+</div>
 </body>
 </html>

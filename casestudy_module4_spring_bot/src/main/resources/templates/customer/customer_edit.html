@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Title</title>
+    <title>Customer Create Form</title>
     <style>
         .container.w-50 {
             background-color: #9bc4e5;
@@ -9,100 +9,80 @@
             border-radius: 10px;
             padding: 10px 30px;
         }
-        .w-100.mt-20.text-center {
-            margin-top: 20px;
-        }
     </style>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div th:replace="/include/home::nav"></div>
-    <div class="edit-form">
-        <div class="container w-50">
-            <form action="/customers?action=update" method="post">
-                <h5 class ="text-center" style="align-content: center; color: #0069d9">CẬP NHẬT</h5>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Mã khách hàng:</label>
-                    <input readonly type="text" name="customerId" value="${customer.customerId}" class="form-control"
-                           id="exampleFormControlInput1">
-                    <p style="color: red"></p>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Loại khách hàng:</label>
-                    <select class="form-select" name="customerTypeId" id="exampleFormControlSelect1">
-<!--                        <c:forEach items="${typeList}" var="type">-->
-<!--                           <c:if test="${type.customerTypeId == customer.customerTypeId}">-->
-<!--                               <option value="${type.customerTypeId}">${type.customerTypeName}</option>-->
-<!--                           </c:if>-->
-<!--                        </c:forEach>-->
-<!--                        <c:forEach items="${typeList}" var="type">-->
-<!--                            <c:if test="${type.customerTypeId != customer.customerTypeId}">-->
-<!--                            <option value="${type.customerTypeId}">${type.customerTypeName}</option>-->
-<!--                            </c:if>-->
-<!--                        </c:forEach>-->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput2">Tên khách hàng:</label>
-                    <input type="text" name="customerName" class="form-control" value="${customer.customerName}"
-                           id="exampleFormControlInput2">
-                    <p style="color: red"></p>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput3">Ngày sinh:</label>
-                    <input type="date" name="customerBirth" class="form-control" value="${customer.customerBirth}"
-                           id="exampleFormControlInput3" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect2">Giới tính:</label>
-                    <select id="exampleFormControlSelect2" class="form-select" name="customerGender">
-<!--                       <c:if test="${customer.customerGender == 0}">-->
-<!--                           <option value="0">Nữ</option>-->
-<!--                           <option value="1">Nam</option>-->
-<!--                       </c:if>-->
-<!--                        <c:if test="${customer.customerGender == 1}">-->
-<!--                            <option value="1">Nam</option>-->
-<!--                            <option value="0">Nữ</option>-->
-<!--                        </c:if>-->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput4">Số CMND:</label>
-                    <input type="text" name="customerIdCard" class="form-control" value="${customer.customerIdCard}"
-                           id="exampleFormControlInput4"
-                           placeholder="XXXXXXXX or XXXXXXXXXX" required>
-                    <p style="color: red"></p>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput5">Số điện thoại:</label>
-                    <input type="text" name="customerPhone" class="form-control" value="${customer.customerPhone}"
-                           id="exampleFormControlInput5"
-                           placeholder="(84)90xxxxxxx or (84)91xxxxxxx" required>
-                    <p style="color: red"></p>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput6">Email:</label>
-                    <input type="text" name="customerEmail" class="form-control" value="${customer.customerEmail}"
-                           id="exampleFormControlInput6"
-                           placeholder="abcxyz@gmail.com">
-                    <p style="color: red"></p>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput7">Địa chỉ:</label>
-                    <input type="text" name="customerAddress" class="form-control" value="${customer.customerAddress}"
-                           id="exampleFormControlInput7" required>
-                </div>
-                <div class="w-100 mt-20 text-center">
-                    <button type="submit" class="btn btn-success w-50" style="alignment: center">Lưu</button>
-                </div>
-                <div class="w-100 text-center mt-20">
-                    <p style="color: forestgreen; alignment: center!important;"></p>
-                </div>
-            </form>
-        </div>
-    </div>
+<div th:replace="/include/home::nav"></div>
 
-    <div th:replace="/include/home::footer"></div>
+<div class="create-form">
+    <div class="container w-50">
+        <form th:action="@{/edit/{id}(id = ${id})}" method="post" th:object="${customer}">
+            <h5 style="align-content: center; color: #0069d9">THÊM MỚI CUSTOMER</h5>
+            <div class="col-12">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" th:field="*{name}">
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Gender</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:field="*{gender}"
+                           th:value="0" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Nữ
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:field="*{gender}"
+                           th:value="1" id="flexRadioDefault2"
+                           checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Nam
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Date Of Birth</label>
+                <input type="date" class="form-control" th:field="*{dateOfBirth}">
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Id Card</label>
+                <input type="text" class="form-control" th:field="*{idCard}">
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-control" th:field="*{phoneNumber}">
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" th:field="*{email}">
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-control" th:field="*{address}">
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Customer Type</label>
+                <select class="form-select" aria-label="Default select example" th:field="*{customerType}">
+                    <option th:each="item : ${customerTypeList}" th:text="${item.name}" th:value="${item.id}">One</option>
+                </select>
+            </div>
+
+            <div class="col-12 text-center " style="margin-top: 10px;">
+                <button type="submit" class="btn btn-primary">Cập Nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="/include/home::footer"></div>
 </body>
 </html>
