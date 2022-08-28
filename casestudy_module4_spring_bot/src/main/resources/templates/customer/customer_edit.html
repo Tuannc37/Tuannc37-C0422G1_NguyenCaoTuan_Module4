@@ -18,12 +18,13 @@
 
 <div class="create-form">
     <div class="container w-50">
-        <form th:action="@{/edit/{id}(id = ${id})}" method="post" th:object="${customer}">
-            <h5 style="align-content: center; color: #0069d9">THÊM MỚI CUSTOMER</h5>
+        <form th:action="@{/edit/{id}(id = ${id})}" method="post" th:object="${customerDto}">
+            <h5 style="align-content: center; color: #0069d9">CHỈNH SỬA CUSTOMER</h5>
             <div class="col-12">
                 <label class="form-label">Name</label>
                 <input type="text" class="form-control" th:field="*{name}">
             </div>
+            <div class="mb-3 text-danger" th:errors="*{name}"></div>
 
             <div class="col-12">
                 <label class="form-label">Gender</label>
@@ -48,26 +49,31 @@
                 <label class="form-label">Date Of Birth</label>
                 <input type="date" class="form-control" th:field="*{dateOfBirth}">
             </div>
+            <div class="mb-3 text-danger" th:errors="*{dateOfBirth}"></div>
 
             <div class="col-md-12">
                 <label class="form-label">Id Card</label>
                 <input type="text" class="form-control" th:field="*{idCard}">
             </div>
+            <div class="mb-3 text-danger" th:errors="*{idCard}"></div>
 
             <div class="col-md-12">
                 <label class="form-label">Phone Number</label>
                 <input type="text" class="form-control" th:field="*{phoneNumber}">
             </div>
+            <div class="mb-3 text-danger" th:errors="*{phoneNumber}"></div>
 
             <div class="col-12">
                 <label class="form-label">Email</label>
                 <input type="text" class="form-control" th:field="*{email}">
             </div>
+            <div class="mb-3 text-danger" th:errors="*{email}"></div>
 
             <div class="col-12">
                 <label class="form-label">Address</label>
                 <input type="text" class="form-control" th:field="*{address}">
             </div>
+            <div class="mb-3 text-danger" th:errors="*{address}"></div>
 
             <div class="col-12">
                 <label class="form-label">Customer Type</label>

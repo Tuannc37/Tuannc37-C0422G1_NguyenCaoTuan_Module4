@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c23d928-b0cb-4e25-9575-6cddd1e31087" name="Changes" comment="" />
+    <list default="true" id="1c23d928-b0cb-4e25-9575-6cddd1e31087" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/java/com/example/dto/CustomerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/java/com/example/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/java/com/example/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/java/com/example/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/java/com/example/controller/EmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/resources/templates/customer/customer_create.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/resources/templates/customer/customer_create.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/resources/templates/customer/customer_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/resources/templates/customer/customer_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/resources/templates/customer/customer_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../casestudy_module4_spring_bot/src/main/resources/templates/customer/customer_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ss9_aop_exception_handle/practice/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ss9_aop_exception_handle/practice/customer-management" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +48,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../ss9_aop_exception_handle/exercise/app_book" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration name="AppBookApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -60,6 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1661483615306</updated>
       <workItem from="1661483617185" duration="216000" />
+      <workItem from="1661695245032" duration="11000" />
     </task>
     <servers />
   </component>
