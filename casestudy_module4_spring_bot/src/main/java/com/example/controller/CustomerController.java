@@ -1,7 +1,5 @@
 package com.example.controller;
 
-
-
 import com.example.model.customer.Customer;
 import com.example.service.customer.ICustomerService;
 import com.example.service.customer.ICustomerTypeService;
@@ -69,5 +67,4 @@ public class CustomerController {
         redirectAttributes.addFlashAttribute("mess", "Xóa thành công!");
         return "redirect:/customer";
     }
-    
 }
