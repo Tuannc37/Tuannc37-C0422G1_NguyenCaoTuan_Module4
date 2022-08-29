@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Product</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body id="page-top">
+    <div class="container" style="margin-top: 5rem">
+        <div class="row" style="justify-content: center">
+            <ul class="list-group" style="width: 40%">
+                <li class="list-group-item" th:each="product: ${cart.getMap()}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="" th:src="${product.getKey().getUrl()}" style="width: 100%;
+                            height: 100%" alt="Card image cap">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <h5 th:text="${product.getKey().name}" class="card-title"></h5>
+                            </div>
+                            <div class="row">
+                            <span>
+                              Price: <strong th:text="${product.getKey().price + '$'}" class="card-text"></strong>
+                             </span>
+                            </div>
+                            <div class="row">
+                              <span>
+                                  Amounts:
+                                   <a class="btn btn-sm btn-dark" style="width: 2rem"
+                                      th:href="@{/delete/__${product.getKey().id}__}"
+                                      th:text="${'-'}"></a>
+                                  <strong th:text="${product.getValue()}" class="card-text"></strong>
+                                  <a class="btn btn-sm btn-dark" style="width: 2rem"
+                                     th:href="@{/add/__${product.getKey().id}__(action='show')}"
+                                     th:text="${'+'}"></a>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <span>
+                        Total: <strong th:text="${cart.countTotalPayment() + '$'}"></strong>
+                    </span>
+                </li>
+                <li class="list-group-item">
+                    <span>
+                        Thanh toán: <strong><a th:href="@{/pay}">Thanh toán</a></strong>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="row" style="justify-content: center">
+            <a th:href="@{/shop}" class="btn btn-dark" style="width: 10rem">Shop</a>
+        </div>
+    </div>
+</body>
+<script src="/js/bootstrap.min.js"></script>
+</html>

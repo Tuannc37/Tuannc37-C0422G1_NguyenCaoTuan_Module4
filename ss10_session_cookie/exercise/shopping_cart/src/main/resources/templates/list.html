@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a.btn.btn-primary {
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+    <h2 style="text-align: center">Danh sách sản phẩm</h2>
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="card col-3 mx-auto" style="width: 18rem;margin-bottom: 20px" th:each="product : ${productList}">
+                <img class="card-img-top" style="height: 15em" th:src="@{${product.url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title text-center" th:text="${product.name}"></h5>
+                    <p class="card-text text-center text-danger" th:text="${product.price}+'đ'"></p>
+                    <a th:href="@{/add/__${product.id}__(action='list')}" class="btn btn-primary">Description</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/bootstrap.min.js"></script>
+</html>
