@@ -7,10 +7,15 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>Product</title>
+    <style>
+        li.list-group-item {
+            background-color: #bbd587;
+        }
+    </style>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body id="page-top">
-    <div class="container" style="margin-top: 5rem">
+    <div class="container" style="margin-top: 2rem">
         <div class="row" style="justify-content: center">
             <ul class="list-group" style="width: 40%">
                 <li class="list-group-item" th:each="product: ${cart.getMap()}">

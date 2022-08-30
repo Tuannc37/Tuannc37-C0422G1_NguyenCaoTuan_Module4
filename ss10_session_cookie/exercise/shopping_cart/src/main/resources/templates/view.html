@@ -13,7 +13,7 @@
                 <img class="card-img-top" style="height: 15em" th:src="@{${product.get().url}}" alt="Card image cap">
                 <div class="card-body text-center">
                     <div>Mã Sản Phẩm : <span class="text-success" th:text = "${product.get().code}"></span></div>
-                    <div>Giá SP : <span class="text-danger" th:text = "${product.get().price} +'đ'"></span></div>
+                    <div>Giá SP : <span class="text-danger" th:text = "${product.get().price} +'$'"></span></div>
                     <a th:href="@{/add/__${product.get().id}__(action='list')}" class="btn btn-primary">Thêm Vào Giỏ Hàng</a>
                 </div>
         </div>

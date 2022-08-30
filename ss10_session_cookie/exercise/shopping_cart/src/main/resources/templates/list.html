@@ -26,7 +26,7 @@
                 <img class="card-img-top" style="height: 15em" th:src="@{${product.url}}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title text-center" th:text="${product.name}"></h5>
-                    <p class="card-text text-center text-danger" th:text="${product.price}+'đ'"></p>
+                    <p class="card-text text-center text-danger" th:text="${product.price}+'$'"></p>
                     <a th:href="@{/add/__${product.id}__(action='list')}" class="btn btn-primary">Thêm Vào Giỏ Hàng</a>
                     <a style="margin-top: 5px" th:href="@{/view/__${product.id}__}" class="btn btn-danger">Xem Sản Phẩm</a>
                 </div>
