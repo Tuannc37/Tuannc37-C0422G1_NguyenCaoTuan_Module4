@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="row" style="justify-content: center">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="card col-3 mx-auto" style="width: 18rem;margin-bottom: 20px">
+                <img class="card-img-top" style="height: 15em" th:src="@{${product.get().url}}" alt="Card image cap">
+                <div class="card-body text-center">
+                    <div>Mã Sản Phẩm : <span class="text-success" th:text = "${product.get().code}"></span></div>
+                    <div>Giá SP : <span class="text-danger" th:text = "${product.get().price} +'đ'"></span></div>
+                    <a th:href="@{/add/__${product.get().id}__(action='list')}" class="btn btn-primary">Thêm Vào Giỏ Hàng</a>
+                </div>
+        </div>
+    </div>
+</div>
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

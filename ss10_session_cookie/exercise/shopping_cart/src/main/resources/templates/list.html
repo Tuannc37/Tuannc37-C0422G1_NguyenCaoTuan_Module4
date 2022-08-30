@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        a.btn.btn-primary {
+        a.btn.btn-danger,  a.btn.btn-primary{
             display: block;
         }
     </style>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-    <h2 style="text-align: center">Danh sách sản phẩm</h2>
+
+    <div class="text-center" style="margin-bottom: 20px">
+        <h2>Danh sách sản phẩm</h2>
+        <a style="width: 100px;margin: auto" th:href="@{/shopping-cart}" class="btn btn-primary">Giỏ Hàng</a>
+    </div>
     <div class="container-fluid">
         <div class="row ">
             <div class="card col-3 mx-auto" style="width: 18rem;margin-bottom: 20px" th:each="product : ${productList}">
@@ -19,7 +23,8 @@
                 <div class="card-body">
                     <h5 class="card-title text-center" th:text="${product.name}"></h5>
                     <p class="card-text text-center text-danger" th:text="${product.price}+'đ'"></p>
-                    <a th:href="@{/add/__${product.id}__(action='list')}" class="btn btn-primary">Description</a>
+                    <a th:href="@{/add/__${product.id}__(action='list')}" class="btn btn-primary">Thêm Vào Giỏ Hàng</a>
+                    <a style="margin-top: 5px" th:href="@{/view/__${product.id}__}" class="btn btn-danger">Xem Sản Phẩm</a>
                 </div>
             </div>
         </div>
