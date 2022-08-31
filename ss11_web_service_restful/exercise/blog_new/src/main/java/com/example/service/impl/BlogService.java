@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +19,11 @@ public class BlogService implements IBlogService {
     @Override
     public Page<Blog> findAll(Pageable pageable) {
         return iBlogRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Blog> findAllByCategory(Integer id) {
+        return iBlogRepository.findAllByCategory_Id(id);
     }
 
     @Override

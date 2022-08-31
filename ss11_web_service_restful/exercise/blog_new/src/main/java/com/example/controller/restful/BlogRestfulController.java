@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -64,5 +65,15 @@ public class BlogRestfulController {
             return new ResponseEntity<>(blogOptional, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(blogOptional, HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Blog>> showListBlogInCategory(@PathVariable("id") Integer id){
+        List<Blog> blogList = this.service.findAllByCategory(id);
+
+        if (blogList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(blogList,HttpStatus.OK);
     }
 }

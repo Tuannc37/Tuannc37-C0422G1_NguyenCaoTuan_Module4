@@ -1,6 +1,5 @@
 package com.example.controller.restful;
 
-import com.example.model.Blog;
 import com.example.model.Category;
 import com.example.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +28,5 @@ public class CategoryRestfulController {
             return new ResponseEntity<>(categoryList, HttpStatus.OK);
         }
     }
+
 }
