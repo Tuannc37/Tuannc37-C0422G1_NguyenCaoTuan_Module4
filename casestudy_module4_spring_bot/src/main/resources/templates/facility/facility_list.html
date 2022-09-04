@@ -8,81 +8,117 @@
 </head>
 <body>
     <div th:replace="/include/home::nav"></div>
-    <div class = "container-fluid">
-        <center style="margin-top: 10px;">
-            <h2>Facility Management</h2>
-            <div class = header-panel>
-                <p><a class="btn btn-outline-primary" href="/showCreateFacility">Add New Facility</a></p>
+    <div class="container-fluid">
+        <div class="text-center mb-3">
+            <h3>Facility List</h3>
+            <div>
+                <a href="/showCreateFacility" class="btn btn-outline-primary" type="button" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus"
+                         viewBox="0 0 16 16">
+                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                        <path fill-rule="evenodd"
+                              d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                </a>
             </div>
+            <p class="text-success text-center" th:text="${mess}"></p>
+        </div>
+        <table class="table table-info table-striped table-bordered ">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên Dịch Vụ</th>
+                <th>Diện Tích</th>
+                <th>Chi Phí Thuê</th>
+                <th>Số Người Tối Đa</th>
+                <th>Tiêu Chuẩn Phòng</th>
+                <th>Tiện Nghi khác</th>
+                <th>Diện Tích Hồ Bơi</th>
+                <th>Số Tầng</th>
+                <th>Kiểu Thuê</th>
+                <th>Loại Dịch Vụ</th>
+                <th>Cập Nhật</th>
+                <th>Xóa</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, stt : ${facility}">
+                <td th:text="${stt.count + 5 * facility.number}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.area}"></td>
+                <td th:text="${item.cost}"></td>
+                <td th:text="${item.maxPeople}"></td>
+                <td th:text="${item.standardRoom}"></td>
+                <td th:text="${item.descriptionOtherConvenience}"></td>
+                <td th:text="${item.poolArea}"></td>
+                <td th:text="${item.numberOfFloors}"></td>
+                <td th:text="${item.rentType.name}"></td>
+                <td th:text="${item.facilityType.name}"></td>
+                <td>
+                    <a th:href="@{/showEditFacility/{id} (id = ${item.id})}" class="btn btn-outline-primary btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
+                             viewBox="0 0 16 16">
+                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                        </svg>
+                    </a>
+                </td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modelId"
+                            th:attr="onclick=|objDelete('${item.id}'+','+'${item.name}')|">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-        </center>
-        <div align="center">
-            <table class="table table-info table-striped">
-                <tr>
-                    <th>ID Dịch vụ</th>
-                    <th>Tên dịch vụ</th>
-                    <th>Diện tích phòng</th>
-                    <th>Giá phòng</th>
-                    <th>Số người tối đa</th>
-                    <th>Kiểu thuê</th>
-                    <th>Loại dịch vụ</th>
-                    <th>Tiêu chuẩn phòng</th>
-                    <th>Mô tả khác</th>
-                    <th>Diện tích hồ bơi</th>
-                    <th>Số tầng</th>
-                    <th>Sửa</th>
-                    <th>Xóa</th>
-                </tr>
+        <div class="d-flex justify-content-md-end align-items-center">
+            <a th:href="@{/facility/(page=${facility.number - 1},keyword=${nameVal})}"
+               th:if="${facility.hasPrevious}" class="btn btn-outline-primary btn-sm me-2">Previous</a>
+            <span th:text="${facility.number + 1}"></span>
+            /
+            <span th:text="${facility.totalPages}"></span>
+            <a th:href="@{/facility/(page=${facility.number + 1},keyword=${nameVal})}"
+               th:if="${facility.hasNext}" class="btn btn-outline-primary btn-sm ms-2">Next</a>
+        </div>
+    </div>
 
-                <tr>
-                    <td>1</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td>bnm</td>
-                    <td> <a class="btn btn-outline-primary" href="/showEditFacility}">Edit</a></td>
-                    <td>
-                        <button onclick="showInfoDelete('${facility.serviceId}','${facility.serviceName}')" type="button" class="btn btn-primary bg-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Delete
+    <!-- Modal -->
+    <form th:action="@{/deleteFacility}" method="post">
+        <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modelTitleId">Delete Facility</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </td>
-                </tr>
-            </table>
-            <form action="/facility?action=delete" method="post">
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <input hidden type="text" name="serviceId" id="deleteId">
-                                <span>Bạn có muốn xóa : </span><span id="deleteName"></span>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Delete</button>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <span>Do you want to delete? <span class="text-danger" id="nameDelete"></span></span>
+                        <input type="text" id="idDelete" name="id" hidden>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete">
                     </div>
                 </div>
-            </form>
-            <script>
-                function showInfoDelete(id,name) {
-                    document.getElementById("deleteId").value= id;
-                    document.getElementById("deleteName").innerText=name;
-                }
-            </script>
+            </div>
         </div>
+    </form>
+    <script>
+        function objDelete(name) {
+            let arr = name.split(",");
+            document.getElementById("idDelete").value = arr[0];
+            document.getElementById("nameDelete").innerText = arr[1];
+        }
+    </script>
 
-        <div th:replace="/include/home::footer" class="container-fluid"></div>
+    <div th:replace="/include/home::footer" class="container-fluid"></div>
     </div>
 
 </body>

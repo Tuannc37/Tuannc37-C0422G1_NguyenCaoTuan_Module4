@@ -69,8 +69,7 @@ public class BlogRestfulController {
 
     @GetMapping("/category/{id}")
     public ResponseEntity<List<Blog>> showListBlogInCategory(@PathVariable("id") Integer id){
-        List<Blog> blogList = this.service.findAllByCategory(id);
-
+        List<Blog> blogList = service.findAllByCategory(id);
         if (blogList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

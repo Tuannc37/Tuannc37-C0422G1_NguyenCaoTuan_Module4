@@ -8,6 +8,6 @@ public class ContractController {
 
     @GetMapping("/contract")
     public String testEmployee(){
-        return "contract/contract_list";
+        return "contract/test";
     }
 }

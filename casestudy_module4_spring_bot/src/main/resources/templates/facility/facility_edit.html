@@ -14,94 +14,108 @@
 <body>
 <div th:replace="/include/home::nav"></div>
 <div class="container w-50 mt-2 p-2 container-fluid">
-    <h3 align="center">SỬA ĐỔI DỊCH VỤ</h3>
-    <form class="form-group" action="" method="post">
-        <div class="col-md-12">
-            <label for="name" class="form-label">Tên dịch vụ:</label>
-            <input type="text" class="form-control" id="name"  value = "${facility.serviceName}" name="serviceName">
-        </div>
-
-        <div class="col-md-12">
-            <label for="area" class="form-label">Diện tích sử dụng:</label>
-            <input type="text" class="form-control" id="area"  value = "${facility.serviceArea}" name="serviceArea">
-            <p style="color: red"></p>
-        </div>
-
-        <div class="col-md-12">
-            <label for="cost" class="form-label">Chi phí thuê:</label>
-            <input type="text" class="form-control" id="cost" value = "${facility.serviceCost}"  name="serviceCost" >
-            <p style="color: red"></p>
-        </div>
-
-        <div class="col-md-12">
-            <label for="inputAddress2" class="form-label">Số lượng người tối đa: </label>
-            <input type="text" class="form-control" id="inputAddress2" value = "${facility.serviceMaxPeople}" name="serviceMaxPeople" >
-            <p style="color: red"></p>
-        </div>
-
-        <div class="col-md-12">
-            <label for="inputCity" class="form-label">Kiểu thuê:</label>
-            <select name="rentTypeId" id = "inputCity"  class="form-select">
-<!--                <c:forEach items="${typeList}" var="type">-->
-<!--                    <c:if test="${type.rentTypeId == facility.rentTypeId}">-->
-<!--                        <option value="${type.rentTypeId}">${type.rentTypeName}</option>-->
-<!--                    </c:if>-->
-<!--                </c:forEach>-->
-<!--                <c:forEach items="${typeList}" var="type">-->
-<!--                    <c:if test="${type.rentTypeId != customer.rentTypeId}">-->
-<!--                        <option value="${type.rentTypeId}">${type.rentTypeName}</option>-->
-<!--                    </c:if>-->
-<!--                </c:forEach>-->
-            </select>
-        </div>
-
+    <h3 align="center">THÊM MỚI DỊCH VỤ</h3>
+    <form class="form-group" th:action="@{/editFacility/{id}(id = ${id})}" method="post" th:object="${facility}">
         <div class="col-md-12">
             <label class="form-label">Loại dịch vụ:</label>
-            <select name="serviceTypeId" class="form-select" >
-<!--                <c:forEach items="${serviceTypeList}" var="type">-->
-<!--                    <c:if test="${type.serviceTypeId == facility.serviceTypeId}">-->
-<!--                        <option value="${type.serviceTypeId}">${type.serviceTypeName}</option>-->
-<!--                    </c:if>-->
-<!--                </c:forEach>-->
-<!--                <c:forEach items="${serviceTypeList}" var="type">-->
-<!--                    <c:if test="${type.serviceTypeId != customer.serviceTypeId}">-->
-<!--                        <option value="${type.serviceTypeId}">${type.serviceTypeName}</option>-->
-<!--                    </c:if>-->
-<!--                </c:forEach>-->
+            <select class="form-select" aria-label="Default select example" th:field="*{facilityType}"  onchange="showServiceInput(this.value)">
+                <option th:each="item : ${facilityTypeList}" th:text="${item.name}" th:value="${item.id}">One</option>
             </select>
         </div>
 
-        <div class="col-md-12" id="dv1" >
-            <label for="standard_room" class="form-label">Tiêu chuẩn phòng:</label>
-            <input type="text" class="form-control" id="standard_room" value = "${facility.standardRoom}" name="standardRoom">
-        </div>
-        <div class="col-md-12" id="dv2" >
-            <label for="description_other_convenience" class="form-label">Mô tả tiện nghi khác:</label>
-            <input type="text" class="form-control" id="description_other_convenience" value = "${facility.description}" name="description">
+        <div class="col-md-12">
+            <label class="form-label">Tên dịch vụ:</label>
+            <input type="text" class="form-control" th:field="*{name}">
         </div>
 
-        <div class="col-md-12" id="dv4">
-            <label for="pool_area" class="form-label">Diện tích hồ bơi:</label>
-            <input type="text" class="form-control" id="pool_area"  value = "${facility.poolArea}" name="poolArea">
+        <div class="col-md-12">
+            <label class="form-label">Diện tích sử dụng:</label>
+            <input type="number" class="form-control" th:field="*{area}">
             <p style="color: red"></p>
         </div>
 
-        <div class="col-md-12" id="dv3" >
-            <label for="number_of_floors" class="form-label">Số tầng:</label>
-            <input type="text" class="form-control" id="number_of_floors" value = "${facility.numberOfFloor}" name="numberOfFloor">
+        <div class="col-md-12">
+            <label class="form-label">Chi phí thuê:</label>
+            <input type="number" class="form-control" th:field="*{cost}">
+            <p style="color: red"></p>
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">Số lượng người tối đa: </label>
+            <input type="number" class="form-control" th:field="*{maxPeople}">
+            <p style="color: red"></p>
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label" >Kiểu thuê:</label>
+            <select class="form-select" aria-label="Default select example" th:field="*{rentType}">
+                <option th:each="item : ${rentTypeList}" th:text="${item.name}" th:value="${item.id}"></option>
+            </select>
+        </div>
+
+        <div class="col-md-12" id="dv1" style="display: none">
+            <label class="form-label">Tiêu chuẩn phòng:</label>
+            <input type="text" class="form-control" th:field="*{standardRoom}">
+        </div>
+
+        <div class="col-md-12" id="dv2" style="display: none">
+            <label class="form-label">Mô tả tiện nghi khác:</label>
+            <input type="text" class="form-control" th:field="*{descriptionOtherConvenience}">
+        </div>
+
+        <div class="col-md-12" id="dv3" style="display: none">
+            <label class="form-label">Số tầng:</label>
+            <input type="number" class="form-control" th:field="*{numberOfFloors}">
+            <p style="color: red"></p>
+        </div>
+
+
+        <div class="col-md-12" id="dv4" style="display: none">
+            <label class="form-label">Diện tích hồ bơi:</label>
+            <input type="number" class="form-control" th:field="*{poolArea}">
             <p style="color: red"></p>
         </div>
 
         <div class="col-12 text-center" style="margin-top: 10px;">
             <button type="submit" class="btn btn-primary">Cập nhật</button>
         </div>
-
         <div class="col-12 text-center" style="margin-top: 10px;">
             <p style="color: forestgreen; alignment: center!important;"></p>
         </div>
     </form>
 </div>
+
 <div th:replace="/include/home::footer"></div>
+<script>
+    function showServiceInput(v) {
+        console.log(v)
+        console.log(typeof v)
+        switch (v){
+            case "1":
+                document.getElementById("dv1").style.display="block";
+                document.getElementById("dv2").style.display="block";
+                document.getElementById("dv3").style.display="block";
+                document.getElementById("dv4").style.display="block";
+                break;
+            case "2":
+                document.getElementById("dv1").style.display="block";
+                document.getElementById("dv2").style.display="block";
+                document.getElementById("dv3").style.display="block";
+                document.getElementById("dv4").style.display="none";
+                break;
+            case "3":
+                document.getElementById("dv1").style.display="none";
+                document.getElementById("dv2").style.display="none";
+                document.getElementById("dv3").style.display="none";
+                document.getElementById("dv4").style.display="none";
+                break;
+            default:
+                document.getElementById("dv1").style.display="none";
+                document.getElementById("dv2").style.display="none";
+                document.getElementById("dv3").style.display="none";
+                document.getElementById("dv4").style.display="none";
+        }
+    }
 </script>
 </body>
 </html>

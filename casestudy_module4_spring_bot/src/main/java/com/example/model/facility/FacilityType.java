@@ -4,23 +4,23 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "kieu_thue")
-public class RentType {
+@Table(name = "loai_dich_vu")
+public class FacilityType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ma_kieu_thue")
+    @Column(name = "ma_loai_dich_vu")
     private int id;
-    @Column(name = "ten_kieu_thue")
+    @Column(name = "ten_loai_dich_vu")
     private String name;
 
-    @OneToMany(mappedBy = "rentType")
+    @OneToMany(mappedBy = "facilityType")
     private Set<Facility> facilities;
 
-    public RentType() {
+    public FacilityType() {
     }
 
-    public RentType(int id, String name) {
+    public FacilityType(int id, String name) {
         this.id = id;
         this.name = name;
     }
