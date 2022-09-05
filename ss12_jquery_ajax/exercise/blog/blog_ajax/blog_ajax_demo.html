@@ -58,10 +58,10 @@
 
     <script>
         let curPage = 0;
-        let size = 0;
+        let size = 3;
         let nameTitle  = "";
 
-        function getPageBlog(curPage,size,nameTitle ) {
+        function getPageBlog(curPage,size,nameTitle) {
             $.ajax({
                 type: "GET",
                 url: "http://localhost:8080/blogs/api?page=" + curPage + "&size=" + size + "&name=" + nameTitle ,
