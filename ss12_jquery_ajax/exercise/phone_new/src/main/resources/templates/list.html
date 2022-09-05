@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>List Smartphone</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<form id="add-smartphone">
+    <table>
+        <tr>
+            <td>Producer:</td>
+            <td><input type="text" id="producer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input type="text" id="model" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" id="price" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
+        </tr>
+    </table>
+</form>
+<h3 class="text-center">Smartphone List</h3>
+<table id="smartphoneList" class="table table-info table-striped table-bordered text-center">
+    <tr>
+        <th>Producer</th>
+        <th>Model</th>
+        <th>Price</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+    <th:block th:each="smartphone: ${smartphones}">
+        <tr>
+            <td th:text="${smartphone.producer}"></td>
+            <td th:text="${smartphone.model}"></td>
+            <td th:text="${smartphone.price}"></td>
+            <td>
+                <a class="deleteSmartphone btn btn-outline-danger btn-sm" th:href="${smartphone.getId()}">Delete</a>
+            </td>
+            <td>
+                <a class="editSmartphone btn btn-outline-primary btn-sm" th:href="${smartphone.getId()}" data-bs-toggle="modal"
+                   data-bs-target="#exampleModal">Edit</a>
+            </td>
+        </tr>
+    </th:block>
+</table>
+
+<br><br>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id">
+                <div class="form-group">
+                    <label>Producer</label>
+                    <input type="text" class="form-control" id="updateProducer">
+                </div>
+                <div class="form-group">
+                    <label>Model</label>
+                    <input type="text" class="form-control" id="updateModel">
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="text" class="form-control" id="updatePrice">
+                </div>
+                <div class="form-group"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateSmartphone" data-bs-dismiss="modal">Save
+                    changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    function addNewSmartPhone() {
+        let producer = $('#producer').val();
+        let model = $('#model').val();
+        let price = $('#price').val();
+        let newSmartphone = {
+            producer: producer,
+            model: model,
+            price: price
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            async: true,
+            type: "POST",
+            data: JSON.stringify(newSmartphone),
+            url: "/phone/add",
+            success: successHandler
+        });
+        event.preventDefault();
+    }
+
+    function successHandler() {
+        $.ajax({
+            type: "GET",
+            url: "/phone",
+            async: true,
+            success: function (data) {
+                let content = '    <tr>\n' +
+                    '        <th>Producer</th>\n' +
+                    '        <th>Model</th>\n' +
+                    '        <th>Price</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '        <th>Edit</th>\n' +
+                    '    </tr>';
+                for (let i = 0; i < data.length; i++) {
+                    content += getSmartphone(data[i]);
+                }
+                document.getElementById('smartphoneList').innerHTML = content;
+            }
+        });
+    }
+
+    function getSmartphone(smartphone) {
+        return `<tr><td >${smartphone.producer}</td><td >${smartphone.model}</td><td >${smartphone.price}</td>` +
+            `<td><a class="deleteSmartphone btn btn-outline-danger btn-sm" href="${smartphone.id}">Delete</a></td>` +
+            `<td><a class="editSmartphone btn btn-outline-primary btn-sm" href="${smartphone.id}" data-bs-toggle="modal"
+                   data-bs-target="#exampleModal">Edit</a></td>`;
+    }
+
+    $(document).ready(function () {
+        $("#smartphoneList").on("click", ".deleteSmartphone", function (event) {
+            let a = $(this);
+            let smartphoneId = a.attr("href");
+            $.ajax({
+                type: "DELETE",
+                url: `phone/remove/${smartphoneId}`,
+                success: function (data) {
+                    a.parent().parent().remove();
+                }
+
+            });
+            event.preventDefault();
+        });
+    })
+
+    $("#smartphoneList").on("click", ".editSmartphone", function (event) {
+        let idSmartphone = $(this).attr("href");
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: `phone/find/${idSmartphone}`,
+            success: function (data) {
+                debugger
+                document.getElementById("updateProducer").value = data.producer;
+                document.getElementById("updateModel").value = data.model;
+                document.getElementById("updatePrice").value = data.price;
+                document.getElementById("id").value = data.id;
+            }
+        })
+        event.preventDefault();
+    })
+
+    $("#updateSmartphone").click(function () {
+        let id = $("#id").val();
+        let producer = $("#updateProducer").val();
+        let model = $("#updateModel").val();
+        let price = $("#updatePrice").val();
+        let newSmartphone = {
+            id: id,
+            producer: producer,
+            model: model,
+            price: price
+        };
+        $.ajax({
+            type: "PUT",
+            data: JSON.stringify(newSmartphone),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: "phone/update/",
+            success: successHandler
+        })
+    })
+</script>
