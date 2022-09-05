@@ -58,12 +58,13 @@
 
     <script>
         let curPage = 0;
-        let name = "";
+        let size = 0;
+        let nameTitle  = "";
 
-        function getPageBlog(pageNumber, name) {
+        function getPageBlog(curPage,size,nameTitle ) {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/blogs/api?page=" + pageNumber + "&name=" + name,
+                url: "http://localhost:8080/blogs/api?page=" + curPage + "&size=" + size + "&name=" + nameTitle ,
                 success: function (blogPage) {
                     let blogList = blogPage.content;
                     console.log(blogList);
@@ -93,20 +94,24 @@
         }
 
         $("#aPrevious").click(function () {
-            getPageBlog(--curPage,name);
+            getPageBlog(--curPage);
         });
 
         $("#aNext").click(function () {
-            getPageBlog(++curPage,name);
+            getPageBlog(++curPage);
         });
-        
+
+        $("#more").click(function () {
+            size += 2
+            getPageBlog(curPage,size,nameTitle )
+        });
 
         $("#btnSearch").click(function () {
             name = $("#name").val();
-            getPageBlog(curPage, name);
+            getPageBlog(curPage,size,nameTitle );
         });
 
-        getPageBlog(curPage, name);
+        getPageBlog(curPage,size,nameTitle);
     </script>
 </div>
 </body>
