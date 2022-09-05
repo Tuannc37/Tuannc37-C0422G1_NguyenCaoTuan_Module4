@@ -28,7 +28,7 @@ public class BlogController {
         String nameVal = name.orElse("");
         model.addAttribute("blog",blogService.findAllByNameBlog(nameVal,pageable));
         model.addAttribute("nameVal",nameVal);
-        return "blog/test";
+        return "blog/list";
     }
 
     @GetMapping("showCreate")
