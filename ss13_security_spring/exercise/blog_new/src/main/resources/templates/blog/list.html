@@ -17,9 +17,7 @@
                 <th>Content</th>
                 <th>Date</th>
                 <th>Name</th>
-                <th>Edit</th>
-                <th>Delete</th>
-                <th>View</th>
+                <th colspan="3">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -29,16 +27,21 @@
                 <td th:text="${item.content}"></td>
                 <td th:text="${item.author}"></td>
                 <td th:text="${item.category == null ? '' : item.category.name}"></td>
-                <td>
-                    <a th:href="@{/blog/showEdit/{id} (id = ${item.id})}" class="btn btn-outline-success">Edit</a>
-                </td>
-                <td>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modelId"
-                            onclick="objDelete(this.value)" th:value="${item.id}+','+${item.nameBlog}">
-                        Delete
-                    </button>
-                </td>
+                <th:block th:if="${role!= null}">
+                    <th:block th:each="role: ${role}" th:if="${role.authority.equals('ROLE_ADMIN')}">
+                        <td>
+                            <a th:href="@{/blog/showEdit/{id} (id = ${item.id})}" class="btn btn-outline-success">Edit</a>
+                        </td>
+                        <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modelId"
+                                    onclick="objDelete(this.value)" th:value="${item.id}+','+${item.nameBlog}">
+                                Delete
+                            </button>
+                        </td>
+                    </th:block>
+                </th:block>
+
                 <td>
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modelView"
                             onclick="objView(this.value)" th:value="${item.nameBlog}+','+${item.content}">

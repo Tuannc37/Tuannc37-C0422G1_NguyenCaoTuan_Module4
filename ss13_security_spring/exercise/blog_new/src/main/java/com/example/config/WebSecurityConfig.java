@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.service.impl.MyUserDetailService;
+import com.example.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,28 +8,61 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
-    private MyUserDetailService myUserDetailService;
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private AppConfig appConfig;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(appConfig.passwordEncoder());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.csrf().disable();
+
+        http.authorizeRequests().antMatchers("/", "/login", "/logout", "/blog/showList").permitAll();
+
+        http.authorizeRequests().antMatchers("/blog/showList").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+
+        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
+        http.authorizeRequests().and().formLogin()
+                .loginProcessingUrl("/j_spring_security_check")
+                .loginPage("/login")
+                .defaultSuccessUrl("/userAccountInfo")
+                .failureUrl("/login?error=true")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+
+        http.authorizeRequests().and()
+                .rememberMe().tokenRepository(this.persistentTokenRepository())
+                .tokenValiditySeconds(1 * 24 * 60 * 60);
+
+    }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    public PersistentTokenRepository persistentTokenRepository() {
+        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
+        return memory;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(myUserDetailService).passwordEncoder(passwordEncoder());
-    }
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable()
-                .formLogin().defaultSuccessUrl("/blog/list").permitAll()
-                .and()
-                .authorizeRequests().anyRequest().authenticated();
-    }
 }

@@ -5,11 +5,14 @@ import com.example.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -24,10 +27,15 @@ public class BlogController {
 
     @GetMapping("showList")
     public String showList(@PageableDefault(page = 0, size = 5) Pageable pageable, Model model,
-                           @RequestParam Optional<String> name) {
+                           @RequestParam Optional<String> name, Principal principal) {
         String nameVal = name.orElse("");
         model.addAttribute("blog",blogService.findAllByNameBlog(nameVal,pageable));
         model.addAttribute("nameVal",nameVal);
+        if(principal == null){
+            return "blog/list";
+        }
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        model.addAttribute("role",loginedUser.getAuthorities());
         return "blog/list";
     }
 
