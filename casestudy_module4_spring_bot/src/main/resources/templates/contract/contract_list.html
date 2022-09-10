@@ -1,194 +1,234 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Furama Resort</title>
-    <style>
-        .col-md-8.bg-light.p-3 {
-            width: 90%;
-        }
-    </style>
+    <title>Customer Management Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<div th:replace="/include/home::nav"></div>
-<center style="margin-top: 10px;">
-    <h2>Danh Sách Dịch Vụ</h2>
-    <div class = header-panel>
-        <p><a cclass="btn btn-outline-primary" href="/contract_create">Add New User</a></p>
+<div class="container-fluid">
+    <div th:replace="/include/home::nav"></div>
+
+    <div class="container-fluid">
+        <p class="text-success" th:text="${mess}"></p>
+        <div class="text-center mb-3">
+            <h3>DANH SÁCH HỢP ĐỒNG</h3>
+        </div>
+        <table class="table table-info table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Dịch vụ</th>
+                <th>Khách hàng</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Tiền cọc</th>
+                <th>Tổng tiền</th>
+                <th>Các dịch vụ đi kèm</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, stt : ${contract}">
+                <td th:text="${stt.count + 5 * contract.number}"></td>
+                <td th:text="${item.facility.name}"></td>
+                <td th:text="${item.customer.name}"></td>
+                <td th:text="${item.startDate}"></td>
+                <td th:text="${item.endDate}"></td>
+                <td th:text="${item.deposit}"></td>
+                <td th:text="${item.totalMoney}"></td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#modelIdCreate">+
+                    </button>
+                    <!-- Button trigger modal -->
+                    <a th:href="@{/contract/showListAttach/{id} (id = ${item.id})}" class="btn btn-primary btn-sm">
+                        list of included services
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-md-end align-items-center">
+            <a th:href="@{/contract(page = ${contract.number - 1})}" th:if="${contract.hasPrevious}"
+               class="btn btn-outline-primary btn-sm me-2">Previous</a>
+            <span th:text="${contract.number + 1}"></span>/
+            <span th:text="${contract.totalPages}"></span>
+            <a th:href="@{/contract(page = ${contract.number + 1})}" th:if="${contract.hasNext}"
+               class="btn btn-outline-primary btn-sm ms-2">Next</a>
+        </div>
     </div>
-</center>
-<div align="center">
-    <table class="table table-striped table-hover">
-        <tr class="bg-dark">
-            <th class="text-white">#</th>
-            <th class="text-white">Dịch vụ</th>
-            <th class="text-white">Khách hàng</th>
-            <th class="text-white">Ngày bắt đầu</th>
-            <th class="text-white">Ngày kết thúc</th>
-            <th class="text-white">Số tiền cọc</th>
-            <th class="text-white">Tổng tiền</th>
-            <th class="text-white">Các dịch vụ đi kèm</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>dsdsds</td>
-            <td>dsdsdsd</td>
-            <td>dsdsdsd</td>
-            <td>dsdsds</td>
-            <td>dsdsds</td>
-            <td>dsdsdsds</td>
-            <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop" onclick="">
-                    +
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#attachFacility" onclick="showModalDeleteControl('a','b','c')">
-                    Danh sách các dịch vụ đi kèm
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>21</td>
-            <td>Vip</td>
-            <td>Tuấn</td>
-            <td>10/04/1994</td>
-            <td>Nam</td>
-            <td>121212113</td>
-            <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop" onclick="">
-                    +
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#attachFacility" onclick="showModalDeleteControl('a','b','c')">
-                    Danh sách các dịch vụ đi kèm
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>21</td>
-            <td>Vip</td>
-            <td>Tuấn</td>
-            <td>10/04/1994</td>
-            <td>Nam</td>
-            <td>121212113</td>
-            <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop" onclick="">
-                    +
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#attachFacility" onclick="showModalDeleteControl('a','b','c')">
-                    Danh sách các dịch vụ đi kèm
-                </button>
-            </td>
-        </tr>
-    </table>
-    <form action="/users?action=delete" method="post">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modelTitleId">list of included services</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered ">
+                        <thead class="bg-primary text-center text-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Name</th>
+                            <th>Cost</th>
+                            <th>Unit</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item, stt : ${attachFacilityList}">
+                            <td th:text="${stt.count}"></td>
+                            <td th:text="${item.name}"></td>
+                            <td th:text="${item.cost}"></td>
+                            <td th:text="${item.unit}"></td>
+                            <td th:text="${item.status}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Từ chối</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Create Contract-->
+    <form th:action="@{/contract/createContract}" method="post">
+        <div class="modal fade" id="modelIdCreate" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
                     <div class="modal-body">
-                        <input hidden type="text" name="id" id="deleteId">
-                        <span>Bạn có muốn xóa : </span><span id="deleteName"></span>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Ngày bắt đầu</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="startDate">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Ngày kết thúc</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Tiền gửi</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="deposit">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Tổng tiền</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" disabled id="total">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Khách hàng thuê dịch vụ</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example" id="customer">
+                                    <option th:each="item : ${customerList}" th:text="${item.name}"
+                                            th:value="${item.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Dịch vụ</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example"
+                                        id="idFacility">
+                                    <option th:each="item : ${facilityList}" th:text="${item.name}"
+                                            th:value="${item.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Dịch vụ đi kèm</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-primary" onclick="selContract()">+</button>
+                            </div>
+
+                            <div id="contractDetail">
+                                <table class="table table-bordered ">
+                                    <thead class="bg-primary text-center text-light">
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Name</th>
+                                        <th>Cost</th>
+                                        <th>Unit</th>
+                                        <th>Status</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="item, stt : ${contractDetailList}">
+                                        <td th:text="${stt.count}"></td>
+                                        <td hidden>
+                                            <div class="input-group">
+                                                <input type="number" th:value="${item.id}"
+                                                       class="form-control border-0 bg-white"
+                                                       name="idAttach" disabled>
+                                            </div>
+                                        </td>
+                                        <td th:text="${item.name}"></td>
+                                        <td th:text="${item.cost}"></td>
+                                        <td hidden>
+                                            <div class="input-group">
+                                                <input type="number" th:value="${item.cost}"
+                                                       class="form-control border-0 bg-white" name="costContractDetail"
+                                                       disabled>
+                                            </div>
+                                        </td>
+                                        <td th:text="${item.unit}"></td>
+                                        <td th:text="${item.status}"></td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control quantityContract"
+                                                       name="quantity">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Hủy bỏ</button>
+                        <input type="button" class="btn btn-outline-primary btn-sm" value="Tạo hợp đồng"
+                               onclick="addNewContractDetail()">
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    <input type="text" hidden id="flag" th:value="${flag}">
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Create Contract</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-8 bg-light p-3" style="margin: auto">
-                            <form action="" method="post">
-                                <div class="mb-2 row">
-                                    <label for="contract-id" class="col-sm-4 col-form-label">Mã hợp đồng</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="contract-id" name="contract-id">
-                                    </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <label for="attach-facility" class="col-sm-4 col-form-label">Mã dịch vụ đi kèm</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" readonly class="form-control" id="attach-facility" name="attach-facility">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" onclick="">HỦY BỎ</button>
-                    <button class="btn btn-success" type="submit">TẠO HỢP ĐỒNG</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="attachFacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditLable">DANH SÁCH DỊCH VỤ ĐI KÈM</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body container-fluid">
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Tên dịch vụ đi kèm</th>
-                            <th>Đơn vị</th>
-                            <th>Giá tiền</th>
-                            <th>Số lượng</th>
-                        </tr>
-                        <tr>
-                            <td>Karaoke</td>
-                            <td>Giờ</td>
-                            <td>100000</td>
-                            <td>1</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div th:replace="/include/home::footer"></div>
+    <script src="/js/bootstrap.min.js"></script>
     <script>
-        function showInfoDelete(id,name) {
-            document.getElementById("deleteId").value= id;
-            document.getElementById("deleteName").innerText=name;
-        }
-        function displayAttachFacility() {
-            document.getElementById("tableFacilityContract").style.display='block'
-            document.getElementById("buttonHide").style.display='block'
-        }
-            function hideAttachFacility() {
-            document.getElementById("tableFacilityContract").style.display='none'
-            document.getElementById("buttonHide").style.display='none'
+        let flag = $('#flag').val();
+        if (flag == 1) {
+            $(document).ready(function () {
+                $("#modelId").modal('show');
+            })
         }
     </script>
+
+    <script>
+        document.getElementById("contractDetail").style.display = "none";
+
+        function selContract() {
+            document.getElementById("contractDetail").style.display = "block";
+        }
+    </script>
+
 </div>
 </body>
 </html>

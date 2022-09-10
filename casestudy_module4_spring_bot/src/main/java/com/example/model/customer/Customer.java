@@ -1,6 +1,9 @@
 package com.example.model.customer;
 
+import com.example.model.contract.Contract;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name= "khach_hang")
@@ -30,10 +33,13 @@ public class Customer {
     @JoinColumn(name = "ma_loai_khach", referencedColumnName = "ma_loai_khach")
     private CustomerType customerType;
 
+    @OneToMany(mappedBy = "customer")
+    private Set<Contract> contract;
+
     public Customer() {
     }
 
-    public Customer(int id, String name, String dateOfBirth, int gender, String idCard, String phoneNumber, String email, String address) {
+    public Customer(int id, String name, String dateOfBirth, int gender, String idCard, String phoneNumber, String email, String address, CustomerType customerType, Set<Contract> contract) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -42,6 +48,8 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
+        this.customerType = customerType;
+        this.contract = contract;
     }
 
     public int getId() {
@@ -114,5 +122,13 @@ public class Customer {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+    public Set<Contract> getContract() {
+        return contract;
+    }
+
+    public void setContract(Set<Contract> contract) {
+        this.contract = contract;
     }
 }

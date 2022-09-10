@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Create Facility Page</title>
+    <title>Edit Facility Page</title>
     <style>
         .container.w-50.mt-2.p-2 {
             background-color: #b1efb3;
@@ -14,7 +14,7 @@
 <body>
 <div th:replace="/include/home::nav"></div>
 <div class="container w-50 mt-2 p-2 container-fluid">
-    <h3 align="center">THÊM MỚI DỊCH VỤ</h3>
+    <h3 align="center">CHỈNH SỪA DỊCH VỤ</h3>
     <form class="form-group" th:action="@{/editFacility/{id}(id = ${id})}" method="post" th:object="${facility}">
         <div class="col-md-12">
             <label class="form-label">Loại dịch vụ:</label>
@@ -55,24 +55,24 @@
 
         <div class="col-md-12" id="dv1" style="display: none">
             <label class="form-label">Tiêu chuẩn phòng:</label>
-            <input type="text" class="form-control" th:field="*{standardRoom}">
+            <input type="text" id="dv1Input" class="form-control" th:field="*{standardRoom}">
         </div>
 
         <div class="col-md-12" id="dv2" style="display: none">
             <label class="form-label">Mô tả tiện nghi khác:</label>
-            <input type="text" class="form-control" th:field="*{descriptionOtherConvenience}">
+            <input type="text" id="dv2Input" class="form-control" th:field="*{descriptionOtherConvenience}">
         </div>
 
         <div class="col-md-12" id="dv3" style="display: none">
             <label class="form-label">Số tầng:</label>
-            <input type="number" class="form-control" th:field="*{numberOfFloors}">
+            <input type="number" id="dv3Input" class="form-control" th:field="*{numberOfFloors}">
             <p style="color: red"></p>
         </div>
 
 
         <div class="col-md-12" id="dv4" style="display: none">
             <label class="form-label">Diện tích hồ bơi:</label>
-            <input type="number" class="form-control" th:field="*{poolArea}">
+            <input type="number" id="dv4Input" class="form-control" th:field="*{poolArea}">
             <p style="color: red"></p>
         </div>
 
@@ -102,12 +102,17 @@
                 document.getElementById("dv2").style.display="block";
                 document.getElementById("dv3").style.display="block";
                 document.getElementById("dv4").style.display="none";
+                document.getElementById("dv4Input").value = null;
                 break;
             case "3":
                 document.getElementById("dv1").style.display="none";
+                document.getElementById("dv1Input").value = null;
                 document.getElementById("dv2").style.display="none";
+                document.getElementById("dv2Input").value = null;
                 document.getElementById("dv3").style.display="none";
+                document.getElementById("dv3Input").value = null;
                 document.getElementById("dv4").style.display="none";
+                document.getElementById("dv4Input").value = null;
                 break;
             default:
                 document.getElementById("dv1").style.display="none";

@@ -1,30 +1,52 @@
 package com.example.model.employee;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name = "trinh_do")
 public class EducationDegree {
-    private int educationDegreeId;
-    private String educationDegreeName;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ma_trinh_do")
+    private int id;
+
+    @Column(name = "ten_trinh_do")
+    private String name;
+
+    @OneToMany(mappedBy = "educationDegree")
+    private Set<Employee> employees;
 
     public EducationDegree() {
     }
 
-    public EducationDegree(int educationDegreeId, String educationDegreeName) {
-        this.educationDegreeId = educationDegreeId;
-        this.educationDegreeName = educationDegreeName;
+    public EducationDegree(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public int getEducationDegreeId() {
-        return educationDegreeId;
+    public int getId() {
+        return id;
     }
 
-    public void setEducationDegreeId(int educationDegreeId) {
-        this.educationDegreeId = educationDegreeId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getEducationDegreeName() {
-        return educationDegreeName;
+    public String getName() {
+        return name;
     }
 
-    public void setEducationDegreeName(String educationDegreeName) {
-        this.educationDegreeName = educationDegreeName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }

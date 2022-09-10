@@ -11,7 +11,7 @@
     <div th:replace="/include/home::nav"></div>
     <div class="container-fluid">
         <center style="margin-top: 10px;">
-            <h2>Customer Management</h2>
+            <h2>DANH SÁCH KHÁCH HÀNG</h2>
             <div class=header-panel>
                 <a href="/showCreateCustomer" class="btn btn-outline-primary" type="button" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus"
@@ -28,7 +28,7 @@
             <table class="table table-info table-striped table-bordered">
                 <tr>
                     <th>STT</th>
-                    <th>ID khách hàng</th>
+<!--                    <th>ID khách hàng</th>-->
                     <th>Tên khách hàng</th>
                     <th>Ngày sinh</th>
                     <th>Giới tính</th>
@@ -42,8 +42,8 @@
                     <th>View</th>
                 </tr>
                 <tr th:each="customer , stt : ${customers}">
-                    <td th:text="${stt.count}"></td>
-                    <td th:text="${customer.id}"></td>
+                    <td th:text="${stt.count + 5 * customers.number}"></td>
+<!--                    <td th:text="${customer.id}"></td>-->
                     <td th:text="${customer.name}"></td>
                     <td th:text="${customer.dateOfBirth}"></td>
                     <td th:if="${customer.gender == 0}">Nữ</td>
@@ -103,8 +103,8 @@
                             <input type="text" hidden id="idDelete" name="id">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
+                            <input type="submit" class="btn btn-primary" value="Xóa">
                         </div>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
                     </div>
                 </div>
             </div>

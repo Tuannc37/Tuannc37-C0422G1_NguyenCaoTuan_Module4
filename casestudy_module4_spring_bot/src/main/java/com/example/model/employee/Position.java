@@ -1,30 +1,53 @@
 package com.example.model.employee;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name = "vi_tri")
 public class Position {
-    private int positionId;
-    private String positionName;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ma_vi_tri")
+    private int id;
+
+    @Column(name = "ten_vi_tri")
+    private String name;
+
+    @OneToMany(mappedBy = "position")
+    private Set<Employee> employees;
 
     public Position() {
     }
 
-    public Position(int positionId, String positionName) {
-        this.positionId = positionId;
-        this.positionName = positionName;
+    public Position(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public int getPositionId() {
-        return positionId;
+    public int getId() {
+        return id;
     }
 
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getPositionName() {
-        return positionName;
+    public String getName() {
+        return name;
     }
 
-    public void setPositionName(String positionName) {
-        this.positionName = positionName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }
+

@@ -72,5 +72,4 @@ public class FacilityController {
         redirectAttributes.addFlashAttribute("mess", "Xóa thành công");
         return "redirect:/facility";
     }
-
 }

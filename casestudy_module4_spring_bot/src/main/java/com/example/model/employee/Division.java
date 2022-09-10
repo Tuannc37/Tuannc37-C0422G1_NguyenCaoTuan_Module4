@@ -1,31 +1,53 @@
 package com.example.model.employee;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name = "bo_phan")
 public class Division {
 
-    private int divisionId;
-    private String divisionName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ma_bo_phan")
+    private int id;
+
+    @Column(name = "ten_bo_phan")
+    private String name;
+
+    @OneToMany(mappedBy = "division")
+    private Set<Employee> employees;
 
     public Division() {
     }
 
-    public Division(int divisionId, String divisionName) {
-        this.divisionId = divisionId;
-        this.divisionName = divisionName;
+    public Division(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public int getDivisionId() {
-        return divisionId;
+    public int getId() {
+        return id;
     }
 
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDivisionName() {
-        return divisionName;
+    public String getName() {
+        return name;
     }
 
-    public void setDivisionName(String divisionName) {
-        this.divisionName = divisionName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }
+

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js"></script>
     <style>
@@ -24,31 +24,31 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="collapse navbar-collapse row w-100">
                 <div class="col-md-2">
-                    <img class="ml-5" style="margin-left: 34px;" src="image/Logo-FURAMA-RESORT.jpg" alt="" height="100px">
+                    <img class="ml-5" style="margin-left: 34px;" src="/image/Logo-FURAMA-RESORT.jpg" alt="" height="100px">
                 </div>
                 <div class="col-md-7">
                     <ul class="navbar-nav mr-auto w-100" id="navbarSupportedContent">
                         <li class="nav-item active">
-                            <a class="nav-link text-light" href="/">Home</a>
+                            <a class="nav-link text-light" href="/">Trang chủ</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-light" href="/employee">Employee</a>
+                            <a class="nav-link text-light" href="/employee">Nhân viên</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-light" href="/customer">Customer</a>
+                            <a class="nav-link text-light" href="/customer">Khách hàng</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-light" href="/facility">Service</a>
+                            <a class="nav-link text-light" href="/facility">Dịch vụ</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-light" href="/contract">Contract</a>
+                            <a class="nav-link text-light" href="/contract">Hợp đồng</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-3">
                     <form action="/customer" class="form-inline my-2 my-lg-0 row">
-                        <div class = "col-md-7"><input class="form-control mr-sm-2" name = "name" type="search" placeholder="Search" aria-label="Search"></div>
-                        <div class = "col-md-5"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></div>
+                        <div class = "col-md-7"><input class="form-control mr-sm-2" name = "name" type="search" placeholder="Tìm kiếm" aria-label="Search"></div>
+                        <div class = "col-md-5"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button></div>
                     </form>
                 </div>
             </div>

@@ -1,165 +1,168 @@
 package com.example.model.employee;
 
+import com.example.model.contract.Contract;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name = "nhan_vien")
 public class Employee {
-    private int employeeId;
-    private String employeeName;
-    private String employeeBirth;
-    private String employeeIdCard;
-    private double employeeSalary;
-    private String employeePhone;
-    private String employeeEmail;
-    private String employeeAddress;
-    private int positionId;
-    private int educationDegreeId;
-    private int divisionId;
-    private String username;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ma_nhan_vien")
+    private int id;
+
+    @Column(name = "ho_ten")
+    private String name;
+    @Column(name = "ngay_sinh")
+    private String dateOfBirth;
+    @Column(name = "so_cmnd")
+    private String idCard;
+    @Column(name = "luong")
+    private double salary;
+    @Column(name = "so_dien_thoai")
+    private String phoneNumber;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "dia_chi")
+    private String address;
+
+    private int status;
+
+    @ManyToOne
+    @JoinColumn(name = "ma_vi_tri", referencedColumnName = "ma_vi_tri")
+    private Position position;
+
+    @ManyToOne
+    @JoinColumn(name = "ma_trinh_do", referencedColumnName = "ma_trinh_do")
+    private EducationDegree educationDegree;
+
+    @ManyToOne
+    @JoinColumn(name = "ma_bo_phan", referencedColumnName = "ma_bo_phan")
+    private Division division;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<Contract> contract;
 
     public Employee() {
     }
 
-    public Employee(String employeeName,
-                    String employeeBirth,
-                    String employeeIdCard,
-                    double employeeSalary,
-                    String employeePhone,
-                    String employeeEmail,
-                    String employeeAddress,
-                    int positionId,
-                    int educationDegreeId,
-                    int divisionId,
-                    String username) {
-        this.employeeName = employeeName;
-        this.employeeBirth = employeeBirth;
-        this.employeeIdCard = employeeIdCard;
-        this.employeeSalary = employeeSalary;
-        this.employeePhone = employeePhone;
-        this.employeeEmail = employeeEmail;
-        this.employeeAddress = employeeAddress;
-        this.positionId = positionId;
-        this.educationDegreeId = educationDegreeId;
-        this.divisionId = divisionId;
-        this.username = username;
+    public Employee(int id, String name, String dateOfBirth, String idCard, double salary, String phoneNumber, String email, String address, int status) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.idCard = idCard;
+        this.salary = salary;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.status = status;
     }
 
-    public Employee(int employeeId,
-                    String employeeName,
-                    String employeeBirth,
-                    String employeeIdCard,
-                    double employeeSalary,
-                    String employeePhone,
-                    String employeeEmail,
-                    String employeeAddress,
-                    int positionId,
-                    int educationDegreeId,
-                    int divisionId,
-                    String username) {
-        this.employeeId = employeeId;
-        this.employeeName = employeeName;
-        this.employeeBirth = employeeBirth;
-        this.employeeIdCard = employeeIdCard;
-        this.employeeSalary = employeeSalary;
-        this.employeePhone = employeePhone;
-        this.employeeEmail = employeeEmail;
-        this.employeeAddress = employeeAddress;
-        this.positionId = positionId;
-        this.educationDegreeId = educationDegreeId;
-        this.divisionId = divisionId;
-        this.username = username;
+    public int getId() {
+        return id;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public String getName() {
+        return name;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public String getEmployeeBirth() {
-        return employeeBirth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public void setEmployeeBirth(String employeeBirth) {
-        this.employeeBirth = employeeBirth;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public String getEmployeeIdCard() {
-        return employeeIdCard;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
-    public void setEmployeeIdCard(String employeeIdCard) {
-        this.employeeIdCard = employeeIdCard;
+    public double getSalary() {
+        return salary;
     }
 
-    public double getEmployeeSalary() {
-        return employeeSalary;
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
-    public void setEmployeeSalary(double employeeSalary) {
-        this.employeeSalary = employeeSalary;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getEmployeePhone() {
-        return employeePhone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setEmployeePhone(String employeePhone) {
-        this.employeePhone = employeePhone;
+    public String getEmail() {
+        return email;
     }
 
-    public String getEmployeeEmail() {
-        return employeeEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setEmployeeEmail(String employeeEmail) {
-        this.employeeEmail = employeeEmail;
+    public String getAddress() {
+        return address;
     }
 
-    public String getEmployeeAddress() {
-        return employeeAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setEmployeeAddress(String employeeAddress) {
-        this.employeeAddress = employeeAddress;
+    public Position getPosition() {
+        return position;
     }
 
-    public int getPositionId() {
-        return positionId;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
+    public EducationDegree getEducationDegree() {
+        return educationDegree;
     }
 
-    public int getEducationDegreeId() {
-        return educationDegreeId;
+    public void setEducationDegree(EducationDegree educationDegree) {
+        this.educationDegree = educationDegree;
     }
 
-    public void setEducationDegreeId(int educationDegreeId) {
-        this.educationDegreeId = educationDegreeId;
+    public Division getDivision() {
+        return division;
     }
 
-    public int getDivisionId() {
-        return divisionId;
+    public void setDivision(Division division) {
+        this.division = division;
     }
 
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
+    public Set<Contract> getContract() {
+        return contract;
     }
 
-    public String getUsername() {
-        return username;
+    public void setContract(Set<Contract> contract) {
+        this.contract = contract;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
+

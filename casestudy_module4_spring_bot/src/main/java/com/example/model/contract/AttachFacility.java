@@ -1,0 +1,89 @@
+package com.example.model.contract;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name= "dich_vu_di_kem")
+public class AttachFacility {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ma_dich_vu_di_kem")
+    private int id;
+
+    @Column(name = "ten_dich_vu_di_kem")
+    private String name;
+    @Column(name = "gia")
+    private double cost;
+    @Column(name = "don_vi")
+    private String unit;
+    @Column(name = "trang_thai")
+    private String status;
+
+    @OneToMany(mappedBy = "attachFacility")
+    private Set<ContractDetail> contactDetails;
+
+    public AttachFacility() {
+    }
+
+    public AttachFacility(int id) {
+        this.id = id;
+    }
+
+    public AttachFacility(int id, String name, double cost, String unit, String status) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.unit = unit;
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Set<ContractDetail> getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(Set<ContractDetail> contactDetails) {
+        this.contactDetails = contactDetails;
+    }
+}

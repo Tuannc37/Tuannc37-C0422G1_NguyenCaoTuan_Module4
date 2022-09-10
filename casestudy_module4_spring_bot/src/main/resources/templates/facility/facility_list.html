@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Customer Management Application</title>
+    <title>Facility Management Application</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div th:replace="/include/home::nav"></div>
+    <nav th:replace="/include/home::nav"></nav>
     <div class="container-fluid">
         <div class="text-center mb-3">
-            <h3>Facility List</h3>
+            <h3>DANH SÁCH DỊCH VỤ</h3>
             <div>
                 <a href="/showCreateFacility" class="btn btn-outline-primary" type="button" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus"
@@ -103,8 +103,8 @@
                         <input type="text" id="idDelete" name="id" hidden>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Từ chối</button>
+                        <input type="submit" class="btn btn-outline-danger btn-sm" value="Xóa">
                     </div>
                 </div>
             </div>
