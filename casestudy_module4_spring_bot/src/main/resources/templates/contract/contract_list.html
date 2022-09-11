@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Customer Management Application</title>
+    <title>Contract Management Application</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -9,7 +9,6 @@
 <body>
 <div class="container-fluid">
     <div th:replace="/include/home::nav"></div>
-
     <div class="container-fluid">
         <p class="text-success" th:text="${mess}"></p>
         <div class="text-center mb-3">
@@ -20,10 +19,10 @@
             <tr>
                 <th>#</th>
                 <th>Dịch vụ</th>
-                <th>Khách hàng</th>
-                <th>Ngày bắt đầu</th>
+                <th>Khách Hàng</th>
+                <th>Ngày Bắt đầu</th>
                 <th>Ngày kết thúc</th>
-                <th>Tiền cọc</th>
+                <th>Tiền đặt cọc</th>
                 <th>Tổng tiền</th>
                 <th>Các dịch vụ đi kèm</th>
             </tr>
@@ -42,9 +41,12 @@
                             data-bs-target="#modelIdCreate">+
                     </button>
                     <!-- Button trigger modal -->
-                    <a th:href="@{/contract/showListAttach/{id} (id = ${item.id})}" class="btn btn-primary btn-sm">
-                        list of included services
-                    </a>
+<!--                    <a th:href="@{/showListAttach/{id} (id = ${item.id})}" class="btn btn-primary btn-sm">-->
+<!--                        Danh sách các dịch vụ đi kèm-->
+<!--                    </a>-->
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#modelId">Danh sách các dịch vụ đi kèm
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -64,7 +66,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modelTitleId">list of included services</h4>
+                    <h4 class="modal-title" id="modelTitleId">Danh sách dịch vụ đi kèm</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,10 +76,10 @@
                         <thead class="bg-primary text-center text-light">
                         <tr>
                             <th>STT</th>
-                            <th>Name</th>
-                            <th>Cost</th>
-                            <th>Unit</th>
-                            <th>Status</th>
+                            <th>Tên</th>
+                            <th>Giá</th>
+                            <th>Đơn vị</th>
+                            <th>Trạng thái</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -92,14 +94,14 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Từ chối</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Modal Create Contract-->
-    <form th:action="@{/contract/createContract}" method="post">
+    <form th:action="@{/createContract}" method="post">
         <div class="modal fade" id="modelIdCreate" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -118,7 +120,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Tiền gửi</label>
+                            <label class="col-sm-2 col-form-label">Tiền cọc</label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control" id="deposit">
                             </div>
@@ -130,7 +132,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Khách hàng thuê dịch vụ</label>
+                            <label class="col-sm-2 col-form-label">Khách hàng</label>
                             <div class="col-sm-10">
                                 <select class="form-select" aria-label="Default select example" id="customer">
                                     <option th:each="item : ${customerList}" th:text="${item.name}"
@@ -149,7 +151,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Dịch vụ đi kèm</label>
+                            <label class="col-sm-2 col-form-label">Dnah sách dịch vụ đi kèm</label>
                             <div class="col-sm-10">
                                 <button type="button" class="btn btn-primary" onclick="selContract()">+</button>
                             </div>
@@ -159,11 +161,11 @@
                                     <thead class="bg-primary text-center text-light">
                                     <tr>
                                         <th>STT</th>
-                                        <th>Name</th>
-                                        <th>Cost</th>
-                                        <th>Unit</th>
-                                        <th>Status</th>
-                                        <th>Quantity</th>
+                                        <th>Tên dịch vụ đi kèm</th>
+                                        <th>Giá</th>
+                                        <th>Đơn vị</th>
+                                        <th>Trạng thái</th>
+                                        <th>Số lượng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -201,17 +203,20 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Hủy bỏ</button>
-                        <input type="button" class="btn btn-outline-primary btn-sm" value="Tạo hợp đồng"
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-outline-primary btn-sm" value="Create"
                                onclick="addNewContractDetail()">
                     </div>
                 </div>
             </div>
         </div>
     </form>
+
     <input type="text" hidden id="flag" th:value="${flag}">
 
     <script src="/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
     <script>
         let flag = $('#flag').val();
         if (flag == 1) {
@@ -229,6 +234,42 @@
         }
     </script>
 
+    <script>
+        function addNewContractDetail() {
+            let startDate = $("#startDate").val();
+            let endDate = $("#endDate").val();
+            let deposit = $("#deposit").val();
+            let customer = $("#customer").val();
+            let idFacility = $("#idFacility").val();
+            let idContractDetail = $("#idContractDetail").val();
+
+            let newContract = {
+                startDate: startDate,
+                endDate: endDate,
+                deposit: deposit,
+                customer: {
+                    id: customer
+                },
+                facility: {
+                    id: idFacility
+                }
+            };
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: "http://localhost:8080/createContract",
+                type: "POST",
+                data: JSON.stringify(newContract),
+                dataType: "json",
+                success: function (data) {
+                    idContractDetail = data;
+                    createContractDetail(data);
+                }
+            });
+        }
+    </script>
 </div>
 </body>
 </html>

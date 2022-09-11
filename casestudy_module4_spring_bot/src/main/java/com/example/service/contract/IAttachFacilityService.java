@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IAttachFacilityService {
     List<AttachFacility> findAllAttachFacility();
+    List<AttachFacility> findAllById(int id);
 }

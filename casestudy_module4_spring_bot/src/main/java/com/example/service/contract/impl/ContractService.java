@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,14 +37,15 @@ public class ContractService implements IContractService {
         Page<Contract> contractList = this.findAllContractPage(pageable);
         List<AttachFacility> attachFacilityList = attachFacilityRepository.findAll();
         List<ContractDetail> contractDetailList = contractDetailRepository.findAll();
-        for (Contract c: contractList){
+        for (Contract c: contractList) {
             double totalDetail = 0;
             double costFacility = 0;
-            for (ContractDetail cdt: contractDetailList){
-                if (cdt.getContract().getId() == c.getId()){
-                    for (AttachFacility atf: attachFacilityList){
-                        if (atf.getId() == cdt.getAttachFacility().getId()){
-                            costFacility += atf.getCost()*cdt.getQuantity();
+
+            for (ContractDetail item : contractDetailList) {
+                if (item.getContract().getId() == c.getId()) {
+                    for (AttachFacility attach : attachFacilityList) {
+                        if (attach.getId() == item.getAttachFacility().getId()) {
+                           costFacility += item.getQuantity() * attach.getCost();
                         }
                     }
                 }
@@ -55,6 +55,7 @@ public class ContractService implements IContractService {
         }
         return contractList;
     }
+
 
     @Override
     public List<Contract> findAllContract() {
