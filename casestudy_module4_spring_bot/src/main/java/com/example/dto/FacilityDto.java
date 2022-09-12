@@ -13,19 +13,19 @@ import javax.validation.constraints.Pattern;
 public class FacilityDto implements Validator {
     private Integer id;
 
-    @NotBlank(message = "không được để trống")
-    @Pattern(regexp = "^([A-Z0-9])[a-z0-9]+((\\s[A-Z0-9])[a-z0-9]+)+$", message = "2.Tên dịch vụ được phép chứa số.Và các kí tự đầu tiên của mỗi từ phải viết hoa")
+    @NotBlank(message = "Không được để trống")
+    @Pattern(regexp = "^([A-Z0-9])[a-z0-9]+((\\s[A-Z0-9])[a-z0-9]+)+$", message = "Tên dịch vụ được phép chứa số.Và các kí tự đầu tiên của mỗi từ phải viết hoa")
     private String name;
 
-    @NotNull(message = "không được để trống")
+    @NotNull(message = "Không được để trống")
     @Min(value = 0, message = "Diện tích phải là số dương")
     private Integer area;
 
-    @NotNull(message = "không được để trống")
+    @NotNull(message = "Không được để trống")
     @Min(value = 0, message = "Giá phải là số dương")
     private Double cost;
 
-    @NotNull(message = "không được để trống")
+    @NotNull(message = "Không được để trống")
     @Min(value = 0, message = "Số người phải là số dương")
     private Integer maxPeople;
 
