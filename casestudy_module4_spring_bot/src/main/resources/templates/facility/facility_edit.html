@@ -15,7 +15,7 @@
 <div th:replace="/include/home::nav"></div>
 <div class="container w-50 mt-2 p-2 container-fluid">
     <h3 align="center">CHỈNH SỪA DỊCH VỤ</h3>
-    <form class="form-group" th:action="@{/editFacility}" method="post" th:object="${facility}">
+    <form class="form-group" th:action="@{/editFacility}" method="post" th:object="${facilityDto}">
         <input type="text" th:field="*{id}" hidden>
         <div class="col-md-12">
             <label class="form-label">Loại dịch vụ:</label>
@@ -28,24 +28,28 @@
             <label class="form-label">Tên dịch vụ:</label>
             <input type="text" class="form-control" th:field="*{name}">
         </div>
+        <div class="mb-3 text-danger" th:errors="*{name}"></div>
 
         <div class="col-md-12">
             <label class="form-label">Diện tích sử dụng:</label>
             <input type="number" class="form-control" th:field="*{area}">
             <p style="color: red"></p>
         </div>
+        <div class="mb-3 text-danger" th:errors="*{area}"></div>
 
         <div class="col-md-12">
             <label class="form-label">Chi phí thuê:</label>
             <input type="number" class="form-control" th:field="*{cost}">
             <p style="color: red"></p>
         </div>
+        <div class="mb-3 text-danger" th:errors="*{cost}"></div>
 
         <div class="col-md-12">
             <label class="form-label">Số lượng người tối đa: </label>
             <input type="number" class="form-control" th:field="*{maxPeople}">
             <p style="color: red"></p>
         </div>
+        <div class="mb-3 text-danger" th:errors="*{maxPeople}"></div>
 
         <div class="col-md-12">
             <label class="form-label" >Kiểu thuê:</label>
@@ -56,26 +60,31 @@
 
         <div class="col-md-12" id="dv1" style="display: none">
             <label class="form-label">Tiêu chuẩn phòng:</label>
-            <input type="text" id="dv1Input" class="form-control" th:field="*{standardRoom}">
+            <input type="text" class="form-control" th:field="*{standardRoom}">
         </div>
+        <div class="mb-3 text-danger" th:errors="*{standardRoom}"></div>
 
         <div class="col-md-12" id="dv2" style="display: none">
             <label class="form-label">Mô tả tiện nghi khác:</label>
-            <input type="text" id="dv2Input" class="form-control" th:field="*{descriptionOtherConvenience}">
+            <input type="text" class="form-control" th:field="*{descriptionOtherConvenience}">
         </div>
+        <div class="mb-3 text-danger" th:errors="*{descriptionOtherConvenience}"></div>
 
         <div class="col-md-12" id="dv3" style="display: none">
             <label class="form-label">Số tầng:</label>
-            <input type="number" id="dv3Input" class="form-control" th:field="*{numberOfFloors}">
+            <input type="number" class="form-control" th:field="*{numberOfFloors}">
             <p style="color: red"></p>
         </div>
+        <div class="mb-3 text-danger" th:errors="*{numberOfFloors}"></div>
 
 
         <div class="col-md-12" id="dv4" style="display: none">
             <label class="form-label">Diện tích hồ bơi:</label>
-            <input type="number" id="dv4Input" class="form-control" th:field="*{poolArea}">
+            <input type="number" class="form-control" th:field="*{poolArea}">
             <p style="color: red"></p>
         </div>
+        <div class="mb-3 text-danger" th:errors="*{poolArea}"></div>
+
 
         <div class="col-12 text-center" style="margin-top: 10px;">
             <button type="submit" class="btn btn-primary">Cập nhật</button>
