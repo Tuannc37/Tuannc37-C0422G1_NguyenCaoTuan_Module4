@@ -15,7 +15,8 @@
 <div th:replace="/include/home::nav"></div>
 <div class="container w-50 mt-2 p-2 container-fluid">
     <h3 align="center">CHỈNH SỪA DỊCH VỤ</h3>
-    <form class="form-group" th:action="@{/editFacility/{id}(id = ${id})}" method="post" th:object="${facility}">
+    <form class="form-group" th:action="@{/editFacility}" method="post" th:object="${facility}">
+        <input type="text" th:field="*{id}" hidden>
         <div class="col-md-12">
             <label class="form-label">Loại dịch vụ:</label>
             <select class="form-select" aria-label="Default select example" th:field="*{facilityType}"  onchange="showServiceInput(this.value)">

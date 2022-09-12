@@ -3,6 +3,7 @@ package com.example.model.contract;
 import com.example.model.customer.Customer;
 import com.example.model.employee.Employee;
 import com.example.model.facility.Facility;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_hop_dong")
-    private int id;
+    private Integer id;
 
     @Column(name = "ngay_lam_hop_dong")
     private Date startDate;
@@ -43,42 +44,11 @@ public class Contract {
     public Contract() {
     }
 
-    public Contract(int id) {
-        this.id = id;
-    }
-
-    public Contract(int id, Date startDate, Date endDate, double deposit, Employee employee, Customer customer, Facility facility, Set<ContractDetail> contractDetails) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.deposit = deposit;
-        this.employee = employee;
-        this.customer = customer;
-        this.facility = facility;
-        this.contractDetails = contractDetails;
-    }
-
-    public Contract(int id, Date startDate, Date endDate, Double deposit, Double totalMoney, Employee employee, Customer customer, Facility facility, Set<ContractDetail> contractDetails) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.deposit = deposit;
-        this.totalMoney = totalMoney;
-        this.employee = employee;
-        this.customer = customer;
-        this.facility = facility;
-        this.contractDetails = contractDetails;
-    }
-
-    public void setDeposit(Double deposit) {
-        this.deposit = deposit;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -100,6 +70,10 @@ public class Contract {
 
     public Double getDeposit() {
         return deposit;
+    }
+
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
     }
 
     public Double getTotalMoney() {

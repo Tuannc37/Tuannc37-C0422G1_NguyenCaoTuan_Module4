@@ -34,18 +34,15 @@
                 <td th:text="${item.customer.name}"></td>
                 <td th:text="${item.startDate}"></td>
                 <td th:text="${item.endDate}"></td>
-                <td th:text="${item.deposit}"></td>
-                <td th:text="${item.totalMoney}"></td>
+                <td th:text="${#numbers.formatCurrency(item.deposit)}"></td>
+                <td th:text="${#numbers.formatCurrency(item.totalMoney)}"></td>
                 <td>
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#modelIdCreate">+
                     </button>
-                    <!-- Button trigger modal -->
-<!--                    <a th:href="@{/showListAttach/{id} (id = ${item.id})}" class="btn btn-primary btn-sm">-->
-<!--                        Danh sách các dịch vụ đi kèm-->
-<!--                    </a>-->
+
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#modelId">Danh sách các dịch vụ đi kèm
+                            data-bs-target="#modelId" th:attr="onclick =|getContractDetail(${item.id})|">Danh sách các dịch vụ đi kèm
                     </button>
                 </td>
             </tr>
@@ -82,19 +79,12 @@
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="item, stt : ${attachFacilityList}">
-                            <td th:text="${stt.count}"></td>
-                            <td th:text="${item.name}"></td>
-                            <td th:text="${item.cost}"></td>
-                            <td th:text="${item.unit}"></td>
-                            <td th:text="${item.status}"></td>
-                        </tr>
+                        <tbody id="contractDetailList">
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -136,7 +126,7 @@
                             <div class="col-sm-10">
                                 <select class="form-select" aria-label="Default select example" id="customer">
                                     <option th:each="item : ${customerList}" th:text="${item.name}"
-                                            th:value="${item.id}"></option>
+                                            th:value="${item.id}">Chọn khách hàng</option>
                                 </select>
                             </div>
                         </div>
@@ -146,12 +136,12 @@
                                 <select class="form-select" aria-label="Default select example"
                                         id="idFacility">
                                     <option th:each="item : ${facilityList}" th:text="${item.name}"
-                                            th:value="${item.id}"></option>
+                                            th:value="${item.id}">Chọn dịch vụ</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Dnah sách dịch vụ đi kèm</label>
+                            <label class="col-sm-2 col-form-label">Danh sách dịch vụ đi kèm</label>
                             <div class="col-sm-10">
                                 <button type="button" class="btn btn-primary" onclick="selContract()">+</button>
                             </div>
@@ -203,8 +193,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-outline-primary btn-sm" value="Create"
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+                        <input type="submit" class="btn btn-outline-primary btn-sm" value="Thêm"
                                onclick="addNewContractDetail()">
                     </div>
                 </div>
@@ -231,6 +221,31 @@
 
         function selContract() {
             document.getElementById("contractDetail").style.display = "block";
+        }
+    </script>
+
+    <script>
+        function getContractDetail(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/restContractDetail/list/" + id,
+                success: function (contractDetails) {
+                    let htmlStr = '';
+                    for (let i = 0; i < contractDetails.length; i++) {
+                        htmlStr += `<tr>
+                        <td>${i + 1}</td>
+                        <td>${contractDetails[i].attachFacility.name}</td>
+                        <td>${contractDetails[i].attachFacility.cost}</td>
+                        <td>${contractDetails[i].attachFacility.unit}</td>
+                        <td>${contractDetails[i].attachFacility.status}</td>
+                    </tr>`;
+                    }
+                    $("#contractDetailList").html(htmlStr);
+                    console.log(htmlStr);
+                },
+                error: function (resultError) {
+                }
+            });
         }
     </script>
 
@@ -269,6 +284,8 @@
                 }
             });
         }
+
+
     </script>
 </div>
 </body>

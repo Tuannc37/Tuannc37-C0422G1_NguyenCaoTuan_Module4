@@ -6,6 +6,8 @@ import com.example.service.contract.IContractDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContractDetailService implements IContractDetailService {
     @Autowired
@@ -14,5 +16,10 @@ public class ContractDetailService implements IContractDetailService {
     @Override
     public void create(ContractDetail contractDetail) {
         iContractDetailRepository.save(contractDetail);
+    }
+
+    @Override
+    public List<ContractDetail> findAllByContract_IdContract(Integer id) {
+        return iContractDetailRepository.findAllByContract_Id(id);
     }
 }

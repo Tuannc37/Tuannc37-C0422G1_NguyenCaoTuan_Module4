@@ -18,7 +18,8 @@
 
 <div class="create-form">
     <div class="container w-50">
-        <form th:action="@{/edit/{id}(id = ${id})}" method="post" th:object="${customerDto}">
+        <form th:action="@{/edit}" method="post" th:object="${customerDto}">
+            <input type="text" th:field="*{id}" hidden>
             <h5 style="align-content: center; color: #0069d9">CHỈNH SỬA KHÁCH HÀNG</h5>
             <div class="col-12">
                 <label class="form-label">Họ tên</label>

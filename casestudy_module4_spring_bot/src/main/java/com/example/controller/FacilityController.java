@@ -59,7 +59,7 @@ public class FacilityController {
         return "facility/facility_edit";
     }
 
-    @PostMapping("/editFacility/{id}")
+    @PostMapping("/editFacility")
     public String edit(@ModelAttribute Facility facility, RedirectAttributes redirectAttributes) {
         iFacilytiService.update(facility);
         redirectAttributes.addFlashAttribute("mess", "Cập nhật thành công");

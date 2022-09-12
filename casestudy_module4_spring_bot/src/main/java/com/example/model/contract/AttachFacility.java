@@ -1,5 +1,7 @@
 package com.example.model.contract;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,40 +12,29 @@ public class AttachFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_dich_vu_di_kem")
-    private int id;
+    private Integer id;
 
     @Column(name = "ten_dich_vu_di_kem")
     private String name;
     @Column(name = "gia")
-    private double cost;
+    private Double cost;
     @Column(name = "don_vi")
     private String unit;
     @Column(name = "trang_thai")
     private String status;
 
     @OneToMany(mappedBy = "attachFacility")
+    @JsonBackReference
     private Set<ContractDetail> contactDetails;
 
     public AttachFacility() {
     }
 
-    public AttachFacility(int id) {
-        this.id = id;
-    }
-
-    public AttachFacility(int id, String name, double cost, String unit, String status) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.unit = unit;
-        this.status = status;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,11 +46,11 @@ public class AttachFacility {
         this.name = name;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
