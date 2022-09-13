@@ -14,6 +14,7 @@ public class CustomerDto implements Validator {
 
     @NotBlank(message = "Vui lòng nhập thông tin!")
     private String name;
+
     private String dateOfBirth;
     private int gender;
     @NotBlank(message = "Vui lòng nhập thông tin!")

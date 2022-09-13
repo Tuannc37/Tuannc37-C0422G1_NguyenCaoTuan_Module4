@@ -27,9 +27,6 @@ public class AttachFacility {
     @JsonBackReference
     private Set<ContractDetail> contactDetails;
 
-    public AttachFacility() {
-    }
-
     public Integer getId() {
         return id;
     }

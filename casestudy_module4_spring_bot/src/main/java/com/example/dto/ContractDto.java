@@ -1,46 +1,36 @@
-package com.example.model.contract;
+package com.example.dto;
 
 import com.example.model.customer.Customer;
 import com.example.model.employee.Employee;
 import com.example.model.facility.Facility;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
-@Entity
-@Table(name= "hop_dong")
-public class Contract {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ma_hop_dong")
+public class ContractDto implements Validator {
     private Integer id;
 
-    @Column(name = "ngay_lam_hop_dong")
     private Date startDate;
-    @Column(name = "ngay_ket_thuc")
     private Date endDate;
-    @Column(name = "tien_dat_coc")
     private Double deposit;
     private transient Double totalMoney;
-
-    @ManyToOne
-    @JoinColumn(name = "ma_nhan_vien", referencedColumnName = "ma_nhan_vien")
     private Employee employee;
-
-    @ManyToOne
-    @JoinColumn(name = "ma_khach_hang", referencedColumnName = "ma_khach_hang")
     private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "ma_dich_vu", referencedColumnName = "ma_dich_vu")
     private Facility facility;
 
-    @OneToMany(mappedBy = "contract")
-    private Set<ContractDetail> contractDetails;
+    public ContractDto() {
+    }
 
-    public Contract() {
+    public ContractDto(Integer id, Date startDate, Date endDate, Double deposit, Double totalMoney, Employee employee, Customer customer, Facility facility) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.deposit = deposit;
+        this.totalMoney = totalMoney;
+        this.employee = employee;
+        this.customer = customer;
+        this.facility = facility;
     }
 
     public Integer getId() {
@@ -107,12 +97,13 @@ public class Contract {
         this.facility = facility;
     }
 
-    public Set<ContractDetail> getContractDetails() {
-        return contractDetails;
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
     }
 
-    public void setContractDetails(Set<ContractDetail> contractDetails) {
-        this.contractDetails = contractDetails;
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }
-

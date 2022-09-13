@@ -1,29 +1,33 @@
 package com.example.controller;
 
+import com.example.dto.ContractDetailDto;
+import com.example.dto.ContractDto;
 import com.example.model.contract.AttachFacility;
 import com.example.model.contract.Contract;
+import com.example.model.contract.ContractDetail;
+import com.example.model.customer.Customer;
+import com.example.model.employee.Employee;
+import com.example.model.facility.Facility;
 import com.example.service.contract.IAttachFacilityService;
 import com.example.service.contract.IContractDetailService;
 import com.example.service.contract.IContractService;
 import com.example.service.customer.ICustomerService;
 import com.example.service.facility.IFacilityService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import javax.validation.Valid;
 
 @Controller
-@CrossOrigin
 public class ContractController {
+
 
     @Autowired
     private IContractService contractService;
@@ -40,7 +44,7 @@ public class ContractController {
     @Autowired
     private IContractDetailService contractDetailService;
 
-    @GetMapping("contract")
+    @GetMapping(value = "contract")
     public String showList(@PageableDefault(page = 0, size = 5) Pageable pageable, Model model) {
         model.addAttribute("contract", contractService.totalMoneyContract(pageable));
         model.addAttribute("contractDetail", new Contract());
@@ -48,39 +52,50 @@ public class ContractController {
         model.addAttribute("customerList", customerService.findAllCustomer());
         model.addAttribute("facilityList", facilityService.findAllFacility());
         model.addAttribute("contractDetailList", attachFacilityService.findAllAttachFacility());
-        return "contract/contract_list";
+        return "contract/test";
     }
 
-    @GetMapping("showListAttach/{id}")
-    public String showListAttach(@PageableDefault(value = 5) Pageable pageable,
-                                 @PathVariable int id, Model model) {
-        model.addAttribute("contract", contractService.totalMoneyContract(pageable));
-        model.addAttribute("contractDetail", new Contract());
-        model.addAttribute("attachFacilityList", attachFacilityService.findAllById(id));
-        model.addAttribute("customerList", customerService.findAllCustomer());
-        model.addAttribute("facilityList", facilityService.findAllFacility());
-        model.addAttribute("contractDetailList", attachFacilityService.findAllAttachFacility());
-        model.addAttribute("flag", 1);
-        return "contract/contract_list";
-    }
-
-    @GetMapping("showCreate")
-    public String showCreate(Model model) {
-        model.addAttribute("contractDetail", new Contract());
-        model.addAttribute("customerList", customerService.findAllCustomer());
-        model.addAttribute("facilityList", facilityService.findAllFacility());
-        return "contract/contract_list";
-    }
-
-    @PostMapping("createContract")
-    public ResponseEntity<?> create(@RequestBody Contract contract) {
-        contractService.create(contract);
-        List<Contract> contracts = contractService.findAllContract();
-        int idContract = 0;
-        for (Contract item : contracts) {
-            idContract = item.getId();
+    @PostMapping("/createContractDetail")
+    public String createContractDetail(@ModelAttribute @Valid ContractDetailDto contractDetailDto,
+                                       BindingResult bindingResult,
+                                       RedirectAttributes redirectAttributes) {
+        new ContractDetailDto().validate(contractDetailDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/contract";
         }
-        return new ResponseEntity(idContract, HttpStatus.OK);
+        ContractDetail contractDetail = new ContractDetail();
+        BeanUtils.copyProperties(contractDetailDto, contractDetail);
+        contractDetailService.createContractDetail(contractDetail);
+        redirectAttributes.addFlashAttribute("mess", "thêm dịch vụ đi kèm thành công");
+        return "redirect:/contract";
+    }
+
+    @PostMapping("/createContract")
+    public String createContract(@ModelAttribute("contractDto") @Valid ContractDto contractDto,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
+        new ContractDto().validate(contractDto, bindingResult);
+        if (bindingResult.hasErrors()){
+            return "redirect:/contract";
+        }
+        Contract contract = new Contract();
+        BeanUtils.copyProperties(contractDto, contract);
+
+        Facility facility = new Facility();
+        facility.setId(contractDto.getFacility().getId());
+        contract.setFacility(facility);
+
+        Customer customer = new Customer();
+        customer.setId(contractDto.getCustomer().getId());
+        contract.setCustomer(customer);
+
+        Employee employee = new Employee();
+        employee.setId(contractDto.getEmployee().getId());
+        contract.setEmployee(employee);
+
+        contractService.create(contract);
+        redirectAttributes.addFlashAttribute("mess", "thêm hợp đồng thành công");
+        return "redirect:/contract";
     }
 
 }

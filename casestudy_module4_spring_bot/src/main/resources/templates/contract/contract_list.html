@@ -97,6 +97,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
+                        <h5 style="color: #0069d9;margin-bottom: 20px" class="text-center">THÊM MỚI HỢP ĐỒNG</h5>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Ngày bắt đầu</label>
                             <div class="col-sm-10">
@@ -202,6 +203,7 @@
         </div>
     </form>
 
+
     <input type="text" hidden id="flag" th:value="${flag}">
 
     <script src="/js/bootstrap.min.js"></script>
@@ -249,6 +251,7 @@
         }
     </script>
 
+    </script>
     <script>
         function addNewContractDetail() {
             let startDate = $("#startDate").val();
@@ -256,7 +259,7 @@
             let deposit = $("#deposit").val();
             let customer = $("#customer").val();
             let idFacility = $("#idFacility").val();
-            let idContractDetail = $("#idContractDetail").val();
+            var idContractDetail;
 
             let newContract = {
                 startDate: startDate,
@@ -283,9 +286,60 @@
                     createContractDetail(data);
                 }
             });
+
+            function createContractDetail(idC) {
+                console.log(idC)
+                let quantity = document.getElementsByName("quantity")
+                let idContract = idC;
+                let idAttach = document.getElementsByName("idAttach");
+                let newContractDetail = [];
+                for (let i = 0; i < quantity.length; i++) {
+                    if (quantity[i].value > 0) {
+                        newContractDetail.push([quantity[i].value, idAttach[i].value, idContract]);
+                    }
+                }
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    url: "http://localhost:8080/createContractDetail",
+                    type: "POST",
+                    data: JSON.stringify(newContractDetail),
+                    success: function () {
+                        location.reload();
+                    }
+                })
+            }
         }
 
+        $(".quantityContract").keyup(function () {
+            $("#total").value = null;
+            let idFacility = $("#idFacility").val();
+            let quantity = document.getElementsByName("quantity");
+            let costContractDetail = document.getElementsByName("costContractDetail");
+            let newTotalMoney = [];
+            for (let i = 0; i < quantity.length; i++) {
+                if (quantity[i].value > 0) {
+                    newTotalMoney.push([quantity[i].value, costContractDetail[i].value]);
+                }
+            }
 
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: "http://localhost:8080/totalMoney?idFacility=" + idFacility,
+                type: "POST",
+
+                data: JSON.stringify(newTotalMoney),
+                dataType: "json",
+                success: function (data) {
+                    document.getElementById("total").value = data;
+                }
+            })
+        })
     </script>
 </div>
 </body>
