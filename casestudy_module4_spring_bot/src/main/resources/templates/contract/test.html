@@ -33,8 +33,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item, stt : ${contract}">
-                <td th:text="${stt.count + 5 * contract.number}"></td>
+            <tr th:each="item, stt : ${contractDto}">
+                <td th:text="${stt.count + 5 * contractDto.number}"></td>
                 <td th:text="${item.facility.name}"></td>
                 <td th:text="${item.customer.name}"></td>
                 <td th:text="${item.startDate}"></td>
@@ -53,11 +53,11 @@
             </tr>
         </table>
         <div class="d-flex justify-content-md-end align-items-center">
-            <a th:href="@{/contract(page = ${contract.number - 1})}" th:if="${contract.hasPrevious}"
+            <a th:href="@{/contract(page = ${contractDto.number - 1})}" th:if="${contractDto.hasPrevious}"
                class="btn btn-outline-primary btn-sm me-2">Previous</a>
-            <span th:text="${contract.number + 1}"></span>/
-            <span th:text="${contract.totalPages}"></span>
-            <a th:href="@{/contract(page = ${contract.number + 1})}" th:if="${contract.hasNext}"
+            <span th:text="${contractDto.number + 1}"></span>/
+            <span th:text="${contractDto.totalPages}"></span>
+            <a th:href="@{/contract(page = ${contractDto.number + 1})}" th:if="${contractDto.hasNext}"
                class="btn btn-outline-primary btn-sm ms-2">Next</a>
         </div>
     </div>

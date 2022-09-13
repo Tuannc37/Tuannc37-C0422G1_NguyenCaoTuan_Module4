@@ -46,8 +46,8 @@ public class ContractController {
 
     @GetMapping(value = "contract")
     public String showList(@PageableDefault(page = 0, size = 5) Pageable pageable, Model model) {
-        model.addAttribute("contract", contractService.totalMoneyContract(pageable));
-        model.addAttribute("contractDetail", new Contract());
+        model.addAttribute("contractDto", contractService.totalMoneyContract(pageable));
+        model.addAttribute("contractDetailDto", new Contract());
         model.addAttribute("attachFacilityList", new AttachFacility());
         model.addAttribute("customerList", customerService.findAllCustomer());
         model.addAttribute("facilityList", facilityService.findAllFacility());
