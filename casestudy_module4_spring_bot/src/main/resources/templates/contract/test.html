@@ -74,11 +74,11 @@
                         <form class="row" th:action="@{/createContract}" method="post" th:object="${contractDto}">
                             <div class="col-md-12">
                                 <label for="startday" class="form-label">Ngày bắt đầu </label>
-                                <input type="date" class="form-control" id="startday" th:field="*{startDay}">
+                                <input type="date" class="form-control" id="startday" th:field="*{startDate}">
                             </div>
                             <div class="col-md-12">
                                 <label for="endday" class="form-label">Ngày kết thúc </label>
-                                <input type="date" class="form-control" id="endday" th:field="*{endDay}">
+                                <input type="date" class="form-control" id="endday" th:field="*{endDate}">
                             </div>
 
                             <div class="col-md-12">
@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Tổng tiền</label>
-                                <input type="text" readonly class="form-control" id="total1" name="total">
+                                <input type="text" readonly class="form-control" id="total1" name="totalMoney">
                             </div>
                             <div class="col-12  mt-2 d-flex justify-content-end">
                                 <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">Hủy bỏ

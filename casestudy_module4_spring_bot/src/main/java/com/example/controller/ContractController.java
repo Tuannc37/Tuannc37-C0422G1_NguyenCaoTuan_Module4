@@ -56,7 +56,7 @@ public class ContractController {
     }
 
     @PostMapping("/createContractDetail")
-    public String createContractDetail(@ModelAttribute @Valid ContractDetailDto contractDetailDto,
+    public String createContractDetail(@ModelAttribute("contractDto") @Valid ContractDetailDto contractDetailDto,
                                        BindingResult bindingResult,
                                        RedirectAttributes redirectAttributes) {
         new ContractDetailDto().validate(contractDetailDto, bindingResult);
