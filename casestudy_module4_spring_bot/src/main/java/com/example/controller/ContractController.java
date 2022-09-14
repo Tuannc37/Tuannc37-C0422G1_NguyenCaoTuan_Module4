@@ -46,13 +46,14 @@ public class ContractController {
 
     @GetMapping(value = "contract")
     public String showList(@PageableDefault(page = 0, size = 5) Pageable pageable, Model model) {
-        model.addAttribute("contractDto", contractService.totalMoneyContract(pageable));
+        model.addAttribute("contract", contractService.totalMoneyContract(pageable));
+        model.addAttribute("contractDto",new ContractDto());
         model.addAttribute("contractDetailDto", new ContractDetail());
         model.addAttribute("attachFacilityList", new AttachFacility());
         model.addAttribute("customerList", customerService.findAllCustomer());
         model.addAttribute("facilityList", facilityService.findAllFacility());
         model.addAttribute("contractDetailList", attachFacilityService.findAllAttachFacility());
-        return "contract/test";
+        return "contract/contract_list";
     }
 
     @PostMapping("/createContractDetail")
@@ -66,7 +67,7 @@ public class ContractController {
         ContractDetail contractDetail = new ContractDetail();
         BeanUtils.copyProperties(contractDetailDto, contractDetail);
         contractDetailService.createContractDetail(contractDetail);
-        redirectAttributes.addFlashAttribute("mess", "thêm dịch vụ đi kèm thành công");
+        redirectAttributes.addFlashAttribute("mess", "Thêm dịch vụ đi kèm thành công");
         return "redirect:/contract";
     }
 

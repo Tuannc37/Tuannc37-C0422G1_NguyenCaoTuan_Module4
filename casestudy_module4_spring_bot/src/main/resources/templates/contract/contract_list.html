@@ -10,9 +10,14 @@
 <div class="container-fluid">
     <div th:replace="/include/home::nav"></div>
     <div class="container-fluid">
-        <p class="text-success" th:text="${mess}"></p>
+        <p class="text-success text-center" th:text="${mess}"></p>
         <div class="text-center mb-3">
             <h3>DANH SÁCH HỢP ĐỒNG</h3>
+        </div>
+        <div class="header-panel text-center" style="margin-bottom: 10px">
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#modelIdCreate">Thêm mới hợp đồng
+            </button>
         </div>
         <table class="table table-info table-striped table-bordered">
             <thead>
@@ -38,11 +43,12 @@
                 <td th:text="${#numbers.formatCurrency(item.totalMoney)}"></td>
                 <td>
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#modelIdCreate">+
+                            data-bs-target="#addContractDetail" th:onclick="|addContractDetail(${item.id})|">+
                     </button>
 
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#modelId" th:attr="onclick =|getContractDetail(${item.id})|">Danh sách các dịch vụ đi kèm
+                            data-bs-target="#modelId" th:attr="onclick=|getContractDetail(${item.id})|">Danh sách các
+                        dịch vụ đi kèm
                     </button>
                 </td>
             </tr>
@@ -91,7 +97,7 @@
     </div>
 
     <!-- Modal Create Contract-->
-    <form th:action="@{/createContract}" method="post">
+    <form th:action="@{/createContract}" method="post" th:object="${contractDto}">
         <div class="modal fade" id="modelIdCreate" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -101,33 +107,29 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Ngày bắt đầu</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" id="startDate">
+                                <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Ngày kết thúc</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" id="endDate">
+                                <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Tiền cọc</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="deposit">
+                                <input type="number" class="form-control" id="deposit" th:field="*{deposit}">
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Tổng tiền</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" disabled id="total">
-                            </div>
-                        </div>
+
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Khách hàng</label>
                             <div class="col-sm-10">
                                 <select class="form-select" aria-label="Default select example" id="customer">
                                     <option th:each="item : ${customerList}" th:text="${item.name}"
-                                            th:value="${item.id}">Chọn khách hàng</option>
+                                            th:value="${item.id}">Chọn khách hàng
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -137,72 +139,66 @@
                                 <select class="form-select" aria-label="Default select example"
                                         id="idFacility">
                                     <option th:each="item : ${facilityList}" th:text="${item.name}"
-                                            th:value="${item.id}">Chọn dịch vụ</option>
+                                            th:value="${item.id}">Chọn dịch vụ
+                                    </option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Danh sách dịch vụ đi kèm</label>
-                            <div class="col-sm-10">
-                                <button type="button" class="btn btn-primary" onclick="selContract()">+</button>
-                            </div>
-
-                            <div id="contractDetail">
-                                <table class="table table-bordered ">
-                                    <thead class="bg-primary text-center text-light">
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Tên dịch vụ đi kèm</th>
-                                        <th>Giá</th>
-                                        <th>Đơn vị</th>
-                                        <th>Trạng thái</th>
-                                        <th>Số lượng</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="item, stt : ${contractDetailList}">
-                                        <td th:text="${stt.count}"></td>
-                                        <td hidden>
-                                            <div class="input-group">
-                                                <input type="number" th:value="${item.id}"
-                                                       class="form-control border-0 bg-white"
-                                                       name="idAttach" disabled>
-                                            </div>
-                                        </td>
-                                        <td th:text="${item.name}"></td>
-                                        <td th:text="${item.cost}"></td>
-                                        <td hidden>
-                                            <div class="input-group">
-                                                <input type="number" th:value="${item.cost}"
-                                                       class="form-control border-0 bg-white" name="costContractDetail"
-                                                       disabled>
-                                            </div>
-                                        </td>
-                                        <td th:text="${item.unit}"></td>
-                                        <td th:text="${item.status}"></td>
-                                        <td>
-                                            <div class="input-group">
-                                                <input type="number" class="form-control quantityContract"
-                                                       name="quantity">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
-                        <input type="submit" class="btn btn-outline-primary btn-sm" value="Thêm"
-                               onclick="addNewContractDetail()">
+                        <input type="submit" class="btn btn-outline-primary btn-sm" value="Thêm">
                     </div>
                 </div>
             </div>
         </div>
     </form>
 
+    <!-- Modal -->
+    <div class="modal fade" id="addContractDetail" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+         aria-hidden="true">
+        <form th:action="@{/createContractDetail}" method="post" th:object="${contractDetailDto}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">THÊM DỊCH VỤ ĐI KÈM</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered ">
+                            <thead class="bg-primary text-center text-light">
+                            <tr>
+                                <th>Tên dịch vụ đi kèm</th>
+                                <th>Đơn vị</th>
+                                <th>Giá</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr><input hidden type="text" id="contractId" th:field="*{contract}"></tr>
+                                <th:block th:each="at:${contractDetailList}">
+                                   <tr>
+                                       <td><input type="radio" th:value="${at.id}" th:field="*{attachFacility}"></td>
+                                       <td th:text="${at.name}"></td>
+                                       <td th:text="${at.cost}"></td>
+                                   </tr>
+                                </th:block>
+                                <tr>
+                                    <td>
+                                        <label>Số lượng</label>
+                                        <input type="text" th:field="*{quantity}">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                        <button type="submit" class="btn btn-primary">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <input type="text" hidden id="flag" th:value="${flag}">
 
@@ -210,23 +206,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <script>
+        function addContractDetail(id) {
+            document.getElementById("contractId").value = id;
+        }
+    </script>
+    <script>
         let flag = $('#flag').val();
         if (flag == 1) {
             $(document).ready(function () {
                 $("#modelId").modal('show');
             })
         }
-    </script>
 
-    <script>
         document.getElementById("contractDetail").style.display = "none";
 
         function selContract() {
             document.getElementById("contractDetail").style.display = "block";
         }
-    </script>
 
-    <script>
+
         function getContractDetail(id) {
             $.ajax({
                 type: "GET",
@@ -249,97 +247,6 @@
                 }
             });
         }
-    </script>
-
-    </script>
-    <script>
-        function addNewContractDetail() {
-            let startDate = $("#startDate").val();
-            let endDate = $("#endDate").val();
-            let deposit = $("#deposit").val();
-            let customer = $("#customer").val();
-            let idFacility = $("#idFacility").val();
-            var idContractDetail;
-
-            let newContract = {
-                startDate: startDate,
-                endDate: endDate,
-                deposit: deposit,
-                customer: {
-                    id: customer
-                },
-                facility: {
-                    id: idFacility
-                }
-            };
-            $.ajax({
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                url: "http://localhost:8080/createContract",
-                type: "POST",
-                data: JSON.stringify(newContract),
-                dataType: "json",
-                success: function (data) {
-                    idContractDetail = data;
-                    createContractDetail(data);
-                }
-            });
-
-            function createContractDetail(idC) {
-                console.log(idC)
-                let quantity = document.getElementsByName("quantity")
-                let idContract = idC;
-                let idAttach = document.getElementsByName("idAttach");
-                let newContractDetail = [];
-                for (let i = 0; i < quantity.length; i++) {
-                    if (quantity[i].value > 0) {
-                        newContractDetail.push([quantity[i].value, idAttach[i].value, idContract]);
-                    }
-                }
-                $.ajax({
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    url: "http://localhost:8080/createContractDetail",
-                    type: "POST",
-                    data: JSON.stringify(newContractDetail),
-                    success: function () {
-                        location.reload();
-                    }
-                })
-            }
-        }
-
-        $(".quantityContract").keyup(function () {
-            $("#total").value = null;
-            let idFacility = $("#idFacility").val();
-            let quantity = document.getElementsByName("quantity");
-            let costContractDetail = document.getElementsByName("costContractDetail");
-            let newTotalMoney = [];
-            for (let i = 0; i < quantity.length; i++) {
-                if (quantity[i].value > 0) {
-                    newTotalMoney.push([quantity[i].value, costContractDetail[i].value]);
-                }
-            }
-
-            $.ajax({
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                url: "http://localhost:8080/totalMoney?idFacility=" + idFacility,
-                type: "POST",
-
-                data: JSON.stringify(newTotalMoney),
-                dataType: "json",
-                success: function (data) {
-                    document.getElementById("total").value = data;
-                }
-            })
-        })
     </script>
 </div>
 </body>
