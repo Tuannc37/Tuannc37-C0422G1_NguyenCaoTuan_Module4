@@ -87,19 +87,6 @@ public class ContractController {
         }
         Contract contract = new Contract();
         BeanUtils.copyProperties(contractDto, contract);
-
-        Facility facility = new Facility();
-        facility.setId(contractDto.getFacility().getId());
-        contract.setFacility(facility);
-
-        Customer customer = new Customer();
-        customer.setId(contractDto.getCustomer().getId());
-        contract.setCustomer(customer);
-
-        Employee employee = new Employee();
-        employee.setId(contractDto.getEmployee().getId());
-        contract.setEmployee(employee);
-
         contractService.create(contract);
         redirectAttributes.addFlashAttribute("mess", "Thêm hợp đồng thành công");
         return "redirect:/contract";
