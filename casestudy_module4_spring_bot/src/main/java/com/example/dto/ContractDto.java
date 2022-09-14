@@ -11,9 +11,9 @@ import java.util.Date;
 
 public class ContractDto implements Validator {
     private Integer id;
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
     private Double deposit;
     private transient Double totalMoney;

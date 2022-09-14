@@ -13,11 +13,11 @@
         <div class="text-center mb-3">
             <h3>DANH SÁCH HỢP ĐỒNG</h3>
         </div>
-        <h5 class="text-warning text-center" th:text="${mess}"></h5>
         <div class="header-panel text-center" style="margin-bottom: 10px">
             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#addContract">Thêm mới hợp đồng
             </button>
+            <h5 class="text-warning text-center" th:text="${mess}"></h5>
         </div>
         <table class="table table-info table-striped table-bordered">
             <thead>
@@ -95,13 +95,13 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal -->
     <div class="modal fade" id="addContract" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">TẠO HỢP ĐỒNG</h5>
+                    <h5 class="modal-title text-center" id="exampleModalLabel">TẠO HỢP ĐỒNG</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body container-fluid">
@@ -131,16 +131,18 @@
                                     </option>
                                 </select>
                             </div>
-<!--                            <div class="col-md-12">-->
-<!--                                <label class="form-label">Nhân viên</label>-->
-<!--                                <select th:field="*{employee.id}" class="form-select">-->
-<!--                                    <option value="None">Chọn nhân viên</option>-->
-<!--                                    <option th:each="emp:${employee}"-->
-<!--                                            th:value="${emp.id}"-->
-<!--                                            th:text="${emp.name}">-->
-<!--                                    </option>-->
-<!--                                </select>-->
-<!--                            </div>-->
+
+                            <div class="col-md-12">
+                                <label class="form-label">Nhân viên</label>
+                                <select class="form-select" aria-label="Default select example"
+                                        id="employee" th:field="*{employee}">
+                                    <option value="None">Chọn khách hàng</option>
+                                    <option th:each="item : ${employeeList}" th:text="${item.name}"
+                                            th:value="${item.id}">Chọn khách hàng
+                                    </option>
+                                </select>
+                            </div>
+
                             <div class="col-md-12">
                                 <label class="form-label">Dịch vụ</label>
                                 <select class="form-select" aria-label="Default select example"

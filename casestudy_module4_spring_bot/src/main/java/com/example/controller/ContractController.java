@@ -12,6 +12,7 @@ import com.example.service.contract.IAttachFacilityService;
 import com.example.service.contract.IContractDetailService;
 import com.example.service.contract.IContractService;
 import com.example.service.customer.ICustomerService;
+import com.example.service.employee.IEmployeeService;
 import com.example.service.facility.IFacilityService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +45,16 @@ public class ContractController {
     @Autowired
     private IContractDetailService contractDetailService;
 
+    @Autowired
+    private IEmployeeService iEmployeeService;
+
     @GetMapping(value = "contract")
     public String showList(@PageableDefault(page = 0, size = 5) Pageable pageable, Model model) {
         model.addAttribute("contract", contractService.totalMoneyContract(pageable));
         model.addAttribute("contractDto",new ContractDto());
         model.addAttribute("contractDetailDto", new ContractDetail());
         model.addAttribute("attachFacilityList", new AttachFacility());
+        model.addAttribute("employeeList",iEmployeeService.findAllEmployee());
         model.addAttribute("customerList", customerService.findAllCustomer());
         model.addAttribute("facilityList", facilityService.findAllFacility());
         model.addAttribute("contractDetailList", attachFacilityService.findAllAttachFacility());
