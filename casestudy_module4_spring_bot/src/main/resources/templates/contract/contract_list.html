@@ -10,10 +10,10 @@
 <div class="container-fluid">
     <div th:replace="/include/home::nav"></div>
     <div class="container-fluid">
-        <p class="text-success text-center" th:text="${mess}"></p>
         <div class="text-center mb-3">
             <h3>DANH SÁCH HỢP ĐỒNG</h3>
         </div>
+        <h5 class="text-warning text-center" th:text="${mess}"></h5>
         <div class="header-panel text-center" style="margin-bottom: 10px">
             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#modelIdCreate">Thêm mới hợp đồng
@@ -104,18 +104,47 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <h5 style="color: #0069d9;margin-bottom: 20px" class="text-center">THÊM MỚI HỢP ĐỒNG</h5>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Dịch vụ</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example"
+                                        id="idFacility" th:field="*{facility}">
+                                    <option value="None">Chọn dịch vụ</option>
+                                    <option th:each="item : ${facilityList}" th:text="${item.name}"
+                                            th:value="${item.id}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Khách hàng</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example"
+                                        id="customer" th:field="*{customer}">
+                                    <option value="None">Chọn khách hàng</option>
+                                    <option th:each="item : ${customerList}" th:text="${item.name}"
+                                            th:value="${item.id}">Chọn khách hàng
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Ngày bắt đầu</label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Ngày kết thúc</label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Tiền cọc</label>
                             <div class="col-sm-10">
@@ -123,27 +152,6 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Khách hàng</label>
-                            <div class="col-sm-10">
-                                <select class="form-select" aria-label="Default select example" id="customer">
-                                    <option th:each="item : ${customerList}" th:text="${item.name}"
-                                            th:value="${item.id}">Chọn khách hàng
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label">Dịch vụ</label>
-                            <div class="col-sm-10">
-                                <select class="form-select" aria-label="Default select example"
-                                        id="idFacility">
-                                    <option th:each="item : ${facilityList}" th:text="${item.name}"
-                                            th:value="${item.id}">Chọn dịch vụ
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
@@ -161,7 +169,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">THÊM DỊCH VỤ ĐI KÈM</h5>
+                        <h5 class="modal-title text-center">THÊM DỊCH VỤ ĐI KÈM</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
