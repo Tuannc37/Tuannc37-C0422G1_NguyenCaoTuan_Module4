@@ -3,6 +3,7 @@ package com.example.dto;
 import com.example.model.customer.Customer;
 import com.example.model.employee.Employee;
 import com.example.model.facility.Facility;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -10,8 +11,9 @@ import java.util.Date;
 
 public class ContractDto implements Validator {
     private Integer id;
-
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private Date startDate;
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private Date endDate;
     private Double deposit;
     private transient Double totalMoney;

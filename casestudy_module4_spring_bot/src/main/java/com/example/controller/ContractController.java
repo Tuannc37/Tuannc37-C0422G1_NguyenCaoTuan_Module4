@@ -57,7 +57,7 @@ public class ContractController {
     }
 
     @PostMapping("/createContractDetail")
-    public String createContractDetail(@ModelAttribute("contractDto") @Valid ContractDetailDto contractDetailDto,
+    public String createContractDetail(@ModelAttribute @Valid ContractDetailDto contractDetailDto,
                                        BindingResult bindingResult,
                                        RedirectAttributes redirectAttributes) {
         new ContractDetailDto().validate(contractDetailDto, bindingResult);
@@ -72,10 +72,11 @@ public class ContractController {
     }
 
     @PostMapping("/createContract")
-    public String createContract(@ModelAttribute("contractDto") @Valid ContractDto contractDto,
+    public String createContract(@ModelAttribute @Valid ContractDto contractDto,
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes) {
-        new ContractDto().validate(contractDto, bindingResult);
+
+        new ContractDto().validate(contractDto,bindingResult);
         if (bindingResult.hasErrors()){
             return "redirect:/contract";
         }
@@ -95,7 +96,7 @@ public class ContractController {
         contract.setEmployee(employee);
 
         contractService.create(contract);
-        redirectAttributes.addFlashAttribute("mess", "thêm hợp đồng thành công");
+        redirectAttributes.addFlashAttribute("mess", "Thêm hợp đồng thành công");
         return "redirect:/contract";
     }
 
